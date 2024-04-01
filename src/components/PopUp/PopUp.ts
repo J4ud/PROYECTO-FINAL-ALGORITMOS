@@ -145,6 +145,51 @@ class Popup extends HTMLElement {
               font-size: 20px;
               margin-left:0%;
             }
+            @media (max-width: 720px) {
+              .popup-content {
+                width: 90%; /* Reducir el ancho del popup en pantallas pequeñas */
+                flex-direction: column; /* Cambia a distribución vertical */
+                align-items: flex-start; /* Alinea los elementos a la izquierda */
+                top: 120px;
+              }
+              .popup-content img {
+                margin-right: 0; /* Elimina el espacio entre la imagen y el texto */
+                margin-bottom: 10px; /* Añade espacio entre la imagen y el texto */
+                width: 80%;
+                height: 80%;
+              }
+            }
+            @media (max-width: 480px) {
+              .popUp {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                 width: 70%;
+              }
+              .popup-content {
+                flex-direction: column; /* Cambiar a disposición vertical */
+                align-items: center; /* Centrar horizontalmente */
+                top: 50px;
+              }
+              .popup-content h2 {
+                position: absolute; /* Establecer posición absoluta para colocar el h2 encima de la imagen */
+                top: 50%; /* Colocar el h2 en el centro vertical */
+                left: 50%; /* Colocar el h2 en el centro horizontal */
+                transform: translate(-50%, -50%); /* Centrar el h2 */
+                z-index: 1; /* Asegurar que el h2 esté por encima de la imagen */
+                top: 15px;
+                font-size: 20px;
+                
+              }
+              .popup-content img {
+                max-width: 50%; /* Reducir más el tamaño de la imagen */
+                margin-bottom: 2px; /* Agregar espacio entre la imagen y el título */
+              }
+              .popup-content p {
+                display: none; /* Ocultar el texto */
+              }
+            }
         `;
 
         this.shadowRoot?.appendChild(css);

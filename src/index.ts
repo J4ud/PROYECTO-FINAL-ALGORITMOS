@@ -53,6 +53,20 @@ class AppContainer extends HTMLElement {
         height: auto;
         display: block
       }
+      @media (max-width: 720px) {
+        .cards-container {
+          column-count: 3;
+          margin-top: 150px;
+        }
+        
+      } 
+      @media (max-width: 480px) {
+        .cards-container {
+            column-count: 2; /* Cambiamos el número de columnas a 2 */
+            margin-top: 120px;
+        }
+      }
+
     `;
 
     this.shadowRoot?.appendChild(css);

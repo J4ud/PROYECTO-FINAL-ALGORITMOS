@@ -87,7 +87,24 @@ class Navbar extends HTMLElement {
             font-weight: 400;
             width: 100%;
         }
-        `
+        @media only screen and (max-width: 480px) {
+          :host {
+              height: auto;
+              font-size: 20px;
+          }
+
+          #menu-button {
+              font-size: 20px;
+              height: 30px;
+              width: 40px;
+          }
+
+          .navbar-title {
+              display: block; /* Asegura que el título se muestre en pantallas pequeñas */
+              font-size: 20px; /* Reduce el tamaño del título */
+          }
+      }
+        `;
 
         this.shadowRoot?.appendChild(css);
   }

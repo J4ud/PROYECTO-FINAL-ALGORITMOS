@@ -96,6 +96,37 @@ export default class SearchBar extends HTMLElement {
     .search-button:active {
         background-color: rgb(66, 66, 66); /* Cambiar el color de fondo cuando se presiona el botón */
         color: white; /* Cambiar el color del texto cuando se presiona el botón */
+        
+    @media (max-width: 480px) {
+        .search-bar {
+            flex-direction: row; /* Mantener los elementos en línea */
+            justify-content: space-between; /* Espacio entre los elementos */
+            align-items: center; /* Alinear elementos verticalmente al centro */
+            width: 90%;
+            position: relative; /* Cambiar la posición a relativa */
+            z-index: 1; /* Asegurar que la barra de búsqueda esté detrás del otro componente */
+            margin-bottom: 10px; /* Agregar margen inferior para separarla del otro componente */
+            margin: 60px auto;
+        }
+    
+        .search-input {
+            width: 60%; /* Reducir el ancho del input */
+            margin-right: 5px; /* Añadir un pequeño margen entre el input y el botón */
+            font-size: 14px; /* Tamaño de fuente ligeramente más grande */
+            padding: 8px; /* Espaciado interno aumentado */
+        }
+    
+        .search-button {
+            width: 30%; /* Reducir el ancho del botón */
+            font-size: 16px; /* Tamaño de fuente ligeramente más grande */
+            height: 40px; /* Mantener la altura del botón */
+            margin: 0; /* Eliminar el margen */
+        }
+        
+        .search-button span {
+            display: none; /* Ocultar texto del botón en pantallas pequeñas */
+        }
+    
     }`;
     
     this.shadowRoot?.appendChild(css);
