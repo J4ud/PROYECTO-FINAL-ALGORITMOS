@@ -7,6 +7,7 @@ export enum Attr {
   'userName' = 'userName',
   'uid'= 'uid',
   'image'= 'image',
+  'description'= 'description',
   'email'= 'email',
   'gender'= 'gender',
   'ip_address'='ip_address'
@@ -17,6 +18,7 @@ class Card extends HTMLElement {
     uid?: number;
     userName?: string;
     image?: string;
+    description?: string;
     email?: string;
     gender?: string;
     ip_address?: string;
@@ -35,12 +37,13 @@ class Card extends HTMLElement {
       uid: null,
       userName: null,
       image: null,
+      description: null,
       email: null,
       gender: null,
       ip_address: null,
     }
     return Object.keys(attrs);
-    }
+    };
 
     attributeChangedCallback(propName: Attr, oldVal: string | undefined, newVal:string | undefined) {
       switch (propName) {
@@ -71,7 +74,7 @@ class Card extends HTMLElement {
 
         }
         .card {
-          background-color: rgb(255, 255, 255);
+          background-color: rgb(255, 255, 255, 0);
           width: 100%; /* Ocupar el 100% del ancho del contenedor padre */
           max-width: 100%; /* Establecer un ancho máximo para evitar que las tarjetas se expandan demasiado */
           border-radius: 0em;
@@ -81,11 +84,14 @@ class Card extends HTMLElement {
           display: inline-block;
       }
       
-      img {
-          width: 100%; /* La imagen ocupará todo el ancho de la tarjeta */
-          height: auto; /* La altura se ajustará automáticamente para mantener la proporción */
-      }
-      
+        img {
+            width: 100%; /* La imagen ocupará todo el ancho de la tarjeta */
+            height: auto; /* La altura se ajustará automáticamente para mantener la proporción */
+        }
+        .image-button img{
+          width: 100%;
+          margin-bottom: 0;
+        }
       button {
           width: 100%; /* El botón ocupará todo el ancho de la tarjeta */
           background-color: transparent; /* Fondo transparente para que no se vea */
