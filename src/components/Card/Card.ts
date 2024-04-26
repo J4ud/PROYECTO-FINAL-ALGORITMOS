@@ -2,7 +2,7 @@
 import './Card.css';
 import Popup from '../PopUp/PopUp';
 import styles from '../PopUp/Popup.css'
-
+//commit prueba
 export enum Attr {
   'userName' = 'userName',
   'uid'= 'uid',
