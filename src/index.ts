@@ -1,7 +1,7 @@
 import './index.css';
 import { users } from "./data/data";
 import SearchBar from './components/searchBar/searchBar';
-import Navbar from './components/navbar/navbar';
+import Navbar from './navbar/navbar';
 import Card, {Attr} from './components/Card/Card';
 
 // <index></index>
