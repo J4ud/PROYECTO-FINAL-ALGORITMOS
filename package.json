@@ -19,6 +19,8 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "css-loader": "^6.10.0"
+    "css": "^3.0.0",
+    "css-loader": "^6.10.0",
+    "loader": "^2.1.1"
   }
 }

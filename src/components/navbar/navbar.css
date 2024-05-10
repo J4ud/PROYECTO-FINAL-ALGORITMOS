@@ -1,0 +1,45 @@
+:host {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1A1916;
+    color: white;
+    padding: 15px 15px;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 30px;
+    height: 70px;
+
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between; /* Distribuye los elementos a lo largo del contenedor */
+    align-items: center; /* Centra verticalmente los elementos */
+}
+
+#menu-button {
+    margin-right: 10px; 
+    background-color:#00000000; /* Hacer el botón transparente */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cursor apuntando */
+    font-size: 30px; /* Tamaño de fuente heredado */
+    color: rgb(240, 240, 240); 
+    padding: 0px; /* Sin relleno */
+    margin: 5px; /* Sin margen */
+    height: 40px; /* Altura automática */
+    width: 60px; /* Ancho automático */
+    border-radius: 10px; /* Esquinas redondeadas */
+}
+
+#menu-button:active {
+    background-color: rgb(66, 66, 66); /* Cambiar el color de fondo cuando se presiona el botón */
+    color: white; /* Cambiar el color del texto cuando se presiona el botón */
+}
+
+.navbar-title {
+    flex-grow: 1; /* Hace que el título ocupe el espacio restante */
+    text-align: center; /* Centra horizontalmente el texto */
+}
