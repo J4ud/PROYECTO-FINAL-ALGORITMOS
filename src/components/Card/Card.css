@@ -1,0 +1,43 @@
+
+  
+  
+  
+  .card-image {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  button {
+    background-color: green;
+    color: aliceblue;
+    padding: 2%;
+    border-radius: 0.4em;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #button-close{
+    padding: 0.5%;
+    background-color: white;
+    color: black
+  }
+  
+  .none{
+    display: none
+  }
+  
+  .display{
+    position: relative;
+    display:flex;
+    flex-direction: column;
+    border-radius: 1em;
+    padding: 2%;
+    position: absolute;
+    top: 40%;
+    left: 35%;
+    color: white
+  }
+  
+  .display button{
+    width: min-content
+  }
