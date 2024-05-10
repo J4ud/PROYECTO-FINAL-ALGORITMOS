@@ -1,105 +1,55 @@
-import './index.css';
-import { users } from "./data/data";
-import SearchBar from './components/searchBar/searchBar';
-import Navbar from './components/navbar/navbar';
-import Card, {Attr} from './components/Card/Card';
-
 // <index></index>
+import { appState } from "./store/store";
+import { addObserver } from "./store/store";
+import  "./screens/dashboard/dashboard";
+import "./screens/login/login";
+import './screens/signUp/signUp'
 class AppContainer extends HTMLElement {
-  searchBar: SearchBar;
-  navbar: Navbar;
-  cardsContainer: HTMLDivElement;
-
   constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
-
-    this.searchBar = new SearchBar();
-    this.navbar = new Navbar();
-
-    this.render();
-
-    this.cardsContainer = this.ownerDocument.createElement('div');
-    this.cardsContainer.className = 'cards-container';
+    super(); // always call super() first in the ctor.
+    this.attachShadow({ mode: 'open'})
+    addObserver(this);
+    
   }
-
+  connectedCallback() {
+    this.render()
+  }
   render() {
-    const css = this.ownerDocument.createElement("style");
-    css.textContent = `
-      .cards-container {
-        max-width: 100%;
-        column-count: 4;
-        column-width: calc(20% - 5px);
-        column-gap: 10px;
-        margin: 10%
-        
-        
-        
-        
-      }
-      .image-button img{
-        object-fit: cover;
-      }
+    if (this.shadowRoot) 
+      this.shadowRoot.innerHTML= ''
+    switch (appState.screen) {
+      case 'login':
+        const login = this.ownerDocument.createElement('app-login');
+        this.shadowRoot?.appendChild(login)
+        break;
 
-      .card {
-        width: 100%;
-        height: auto;
-        margin-bottom: 0px;
-        object-fit: cover;
-      }
+        case 'dashboard':
+          const dashboard = this.ownerDocument.createElement('app-dashboard');
+          this.shadowRoot?.appendChild(dashboard)
+          break;
 
-      .card img {
-        width: 100%;
-        height: auto;
-        display: block
-      }
-      @media (max-width: 720px) {
-        .cards-container {
-          column-count: 3;
-          margin-top: 150px;
-        }
-        
-      } 
-      @media (max-width: 480px) {
-        .cards-container {
-            column-count: 2; /* Cambiamos el número de columnas a 2 */
-            margin-top: 120px;
-        }
-      }
+          case 'signUp':
+            const signUp = this.ownerDocument.createElement('app-signup');
+            this.shadowRoot?.appendChild(signUp)
+            break;
 
-    `;
+            case 'profile':
+          const profile = this.ownerDocument.createElement('app-profile');
+          this.shadowRoot?.appendChild(profile)
+          break;
 
-    this.shadowRoot?.appendChild(css);
-    this.cardsContainer = this.ownerDocument.createElement('div');
-    this.cardsContainer.className = 'cards-container';
-    this.shadowRoot?.appendChild(this.cardsContainer);
+            case 'forum':
+          const forum = this.ownerDocument.createElement('app-forum');
+          this.shadowRoot?.appendChild(forum)
+          break;
 
-    this.renderCharacters(users);
 
-    const navbarContainer = this.ownerDocument.createElement('div');
-    navbarContainer.id = 'navbar-container';
-    navbarContainer.appendChild(this.navbar);
-    this.shadowRoot?.appendChild(navbarContainer);
-
-    const searchContainer = this.ownerDocument.createElement('div');
-    searchContainer.id = 'search-container';
-    searchContainer.appendChild(this.searchBar);
-    this.shadowRoot?.appendChild(searchContainer);
+            
+      default:
+        break;
+    }
   }
 
-  renderCharacters(data: any[]) {
-    const cardsContainer = this.ownerDocument.createElement('div');
-    cardsContainer.className = 'cards-container';
-
-    data.forEach((user: any) => {
-      const card = new Card();
-      card.setAttribute(Attr.image, user.image);
-      card.className = 'card';
-      this.cardsContainer.appendChild(card);
-    });
-
-    this.shadowRoot?.appendChild(cardsContainer);
-  }
 }
 
-customElements.define('app-container', AppContainer);
+window.customElements.define('app-container', AppContainer);

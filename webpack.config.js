@@ -2,6 +2,13 @@ const path = require('path');
 
 module.exports = {
 	entry: './src/index.ts',
+	
+		performance: {
+		  maxAssetSize: 500000, // en bytes, ej. 500 KB
+		  maxEntrypointSize: 500000, // en bytes
+		  hints: 'warning' // 'error', 'warning', or false (to disable)
+		},
+	  
 	module: {
 		rules: [
 			{
