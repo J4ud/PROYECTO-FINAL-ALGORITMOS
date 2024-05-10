@@ -66,6 +66,7 @@ export default class SearchBar extends HTMLElement {
 
     .searchbar-container{
         display:flex;
+        z-index: 0;
     }
 
     .search-input {

@@ -1,4 +1,4 @@
-interface DataShape {
+export interface DataShape {
     id: number,
     userName: string,
     image: string,

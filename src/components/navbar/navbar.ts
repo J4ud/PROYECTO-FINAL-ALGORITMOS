@@ -26,7 +26,7 @@ class Navbar extends HTMLElement {
         ${styles}
       </style>
       <div class="navbar-container">
-        <button id="menu-button">≡</button>
+        <menu-button></menu-button>
         <div class="navbar-title">${this.bar || "PALLETE"}</div>
       </div>
     `;
@@ -53,12 +53,17 @@ class Navbar extends HTMLElement {
             z-index:1;
         
         }
+
+        menu-button{
+          z-index: 10000;
+        }
         
         .navbar-container {
             display: flex;
             justify-content: space-between; /* Distribuye los elementos a lo largo del contenedor */
             align-items: center; /* Centra verticalmente los elementos */
             width: 100%;
+            z-index: 9999;
         }
         
         #menu-button {
