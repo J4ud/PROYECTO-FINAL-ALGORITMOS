@@ -1,5 +1,5 @@
 import { AddCards } from '../../types/index';
-import { addmensajes, getmensajes } from
+import { addmensajes, getmensajes } from;
 
 const FormData: Omit<AddCards, 'id'> = {
 	
@@ -12,4 +12,13 @@ class Card extends HTMLElement {
 		super();
 		this.attachShadow({ mode: 'open' });
 	}
+}
+
+connectedCallback() {
+    this.render();
+}
+changemessage(e: any) {
+    console.log(e?.target?.value);
+    
+    FormData.message = e?.target?.value;
 }
