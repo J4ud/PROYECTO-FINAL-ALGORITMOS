@@ -22,3 +22,9 @@ changemessage(e: any) {
     
     FormData.message = e?.target?.value;
 }
+
+submitForm() {
+    console.log(FormData);
+    
+    addmensajes(FormData);
+}
