@@ -12,3 +12,4 @@ class Card extends HTMLElement {
 		super();
 		this.attachShadow({ mode: 'open' });
 	}
+}
