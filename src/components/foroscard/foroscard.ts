@@ -125,3 +125,7 @@ async render() {
           const inputContainer = document.createElement('div');
 		  inputContainer.classList.add('input-container');
 
+          const message = this.ownerDocument.createElement('input');
+          message.placeholder = 'Escribe un mensaje...';
+          message.addEventListener('change', this.changemessage);
+          this.shadowRoot?.appendChild(message);
