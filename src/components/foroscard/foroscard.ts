@@ -134,3 +134,9 @@ async render() {
 			save.innerText = 'ADD';
 			save.addEventListener('click', this.submitForm);
 			this.shadowRoot?.appendChild(save);
+
+            this.shadowRoot?.appendChild(container);
+        });
+            }
+        }
+    }
