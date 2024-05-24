@@ -129,3 +129,8 @@ async render() {
           message.placeholder = 'Escribe un mensaje...';
           message.addEventListener('change', this.changemessage);
           this.shadowRoot?.appendChild(message);
+
+          const save = this.ownerDocument.createElement('button');
+			save.innerText = 'ADD';
+			save.addEventListener('click', this.submitForm);
+			this.shadowRoot?.appendChild(save);
