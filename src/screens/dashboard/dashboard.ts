@@ -6,9 +6,10 @@ import Card, {Attr} from '../../components/Card/Card';
 import { MenuButton } from '../../components/index';
 import {SidebarMenu} from '../../components/index';;  // Asegúrate de que 'Menu/menu' es el archivo correcto para 'SidebarMenu'.
 import { appState } from '../../store/store';
-import { addObserver } from '../../store/store';
+import { addObserver } from '../../store/store';// Importa la función addObserver para observar cambios en el estado
 
 // <index></index>
+// Define la clase Dashboard como un elemento personalizado de HTML
 class Dashboard extends HTMLElement {
   searchBar: SearchBar;
   navbar: Navbar;
@@ -21,6 +22,7 @@ class Dashboard extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     addObserver(this);
 
+     // Instancia los componentes necesarios
     this.searchBar = new SearchBar();
     this.navbar = new Navbar();
     this.SidebarMenu = new SidebarMenu();
@@ -28,6 +30,7 @@ class Dashboard extends HTMLElement {
 
     this.render();
 
+       // Crea y configura el contenedor de tarjetas
     this.cardsContainer = this.ownerDocument.createElement('div');
     this.cardsContainer.className = 'cards-container';
   }
@@ -96,7 +99,7 @@ class Dashboard extends HTMLElement {
 
     this.renderCharacters(users);
 
-    
+    // Crea el contenedor de la barra de navegación y añade los componentes necesarios
 
     this.shadowRoot?.appendChild(sidebarMenu);
     const searchContainer = this.ownerDocument.createElement('div');
@@ -105,6 +108,7 @@ class Dashboard extends HTMLElement {
     this.shadowRoot?.appendChild(searchContainer);
   }
 
+  // Método para renderizar los caracteres (usuarios) como tarjetas
   renderCharacters(data: any[]) {
     const cardsContainer = this.ownerDocument.createElement('div');
     cardsContainer.className = 'cards-container';
@@ -119,6 +123,6 @@ class Dashboard extends HTMLElement {
     this.shadowRoot?.appendChild(cardsContainer);
   }
 }
-
+// Define el elemento personalizado 'app-dashboard'
 customElements.define('app-dashboard', Dashboard);
 export default Dashboard
