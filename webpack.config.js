@@ -29,5 +29,5 @@ module.exports = {
 		filename: 'bundle.js',
 		path: path.resolve(__dirname, 'dist'),
 	},
-	performance: {hints: false, maxEntrypointSize: 512000, maxAssetSize: 512000, },
+	performance: {  hints: false,  maxEntrypointSize: 512000,  maxAssetSize: 512000, },
 };
