@@ -1,4 +1,4 @@
-
+import './cardprofile.css';
 export enum Attr {
   'userName' = 'userName',
   'image' = 'image',
