@@ -4,7 +4,7 @@ import { getFirestore } from "firebase/firestore";
 import { collection, addDoc, getDocs, setDoc, doc } from "firebase/firestore"; 
 import { SignUpForm } from "../components";
 
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 
 // TODO: Replace the following with your app's Firebase project configuration
@@ -64,27 +64,14 @@ createUserWithEmailAndPassword(auth, formData.email, formData.password)
   });
 }
 export const login = (formData:any) => {
-createUserWithEmailAndPassword(auth, formData.email, formData.password)
+signInWithEmailAndPassword(auth, formData.email, formData.password)
   .then( async (userCredential) => {   
 
     //Obtener Id
     const user = userCredential.user;
     console.log(user.uid);
     
-    //Agregar documento bajo ese ID
-    try {
-      const where = doc(db, 'usuarios', user.uid);
-      const data = {
-        doB: formData.doB,
-        name: formData.name,
-        lastName: formData.lastName,
-        userName: formData.userName || 'default'
-      }
-      await setDoc(where, data);
-      alert ('Se creo el usuario')
-    } catch (error) {
-      console.log(error)
-    }
+    
 
 
 

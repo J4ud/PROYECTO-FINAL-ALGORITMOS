@@ -1,6 +1,6 @@
 import { dispatch } from "../../store/store";
 import { ChangeScreen } from "../../store/actions";
-
+import { login } from "../../services/firebase";
 // Definir una interfaz para el usuario
 interface User {
     name: string;
@@ -8,6 +8,15 @@ interface User {
     email: string;
     password: string;
     dob: string;  // Asume que la fecha de nacimiento también se almacena como string
+}
+
+const formData = {
+    name: '',
+    lastName: '',
+    userName: '',
+    email: '',
+    password: '',
+    doB: null
 }
 
 class LoginForm extends HTMLElement {
@@ -20,39 +29,31 @@ class LoginForm extends HTMLElement {
     connectedCallback() {
         this.shadowRoot?.querySelector('#logButton')?.addEventListener('click', (event) => {
             event.preventDefault(); // Previene el comportamiento por defecto del formulario
-            this.handleLogin();
+            
         });
         this.shadowRoot?.querySelector('#SgButton')?.addEventListener('click', () => {
             dispatch(ChangeScreen('signUp')); // Cambia el estado a 'signUp'
         });
     }
 
-
+    changeEmail(e: any) {
+        console.log(e.target.value)
+        formData.email = e?.target?.value
+    }
     
-
-    handleLogin() {
-        const emailInput = this.shadowRoot?.querySelector('input[type="email"]') as HTMLInputElement;
-        const passwordInput = this.shadowRoot?.querySelector('input[type="password"]') as HTMLInputElement;
-
-        if (emailInput && passwordInput) {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-
-            const user = this.validateUser(email, password);
-            if (user) {
-                // Guardar usuario actual en sessionStorage
-                sessionStorage.setItem('currentUser', JSON.stringify(user));
-                dispatch(ChangeScreen('dashboard')); // Cambia el estado a 'dashboard'
-            } else {
-                alert('Invalid email or password');
-            }
-        }
+    changePassword(e: any) {
+        console.log(e.target.value)
+        formData.password = e?.target?.value
     }
 
-    validateUser(email: string, password: string): User | null {
-        const users = JSON.parse(localStorage.getItem('users') || '[]') as User[];
-        const user = users.find(user => user.email === email && user.password === password);
-        return user ? user : null;
+    async submitForm() {
+        try {
+            const user = await login(formData);
+            dispatch(ChangeScreen('login')); // Dispatch a la acción de completar el registro
+          
+        } catch (error) {
+            console.error('Error creating user:', error);
+        }
     }
 
     render() {
