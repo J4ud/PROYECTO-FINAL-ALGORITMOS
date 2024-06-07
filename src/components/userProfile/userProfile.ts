@@ -1,49 +1,93 @@
-import { dispatch } from "../../store/store";
-import { ChangeScreen } from "../../store/actions"; 
+import { users } from "../../data/data";
+import Navbar from '../../components/navbar/navbar';
+import  MenuButton  from '../../components/MenuButton/MenuButton';
+import SidebarMenu from '../../components/Menu/menu'
+import { appState } from '../../store/store';
 class UserProfile extends HTMLElement {
+   
+    navbar: Navbar;
+   
+    Menubutton: MenuButton;
+    SidebarMenu: SidebarMenu;
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        
+    this.navbar = new Navbar();
+    this.SidebarMenu = new SidebarMenu();
+    this.Menubutton = new MenuButton();
     }
 
     connectedCallback() {
         this.render();
-
-        this.shadowRoot?.querySelector('#profile')?.addEventListener('click', () => {
-            dispatch(ChangeScreen('profile')); // Cambia el estado a 'signUp'
-        })
-        
+    
+        // Crear e instanciar correctamente los componentes
+        this.navbar = new Navbar();
+        this.Menubutton = new MenuButton();
+        this.SidebarMenu = new SidebarMenu();
+    
+        // Añadir al shadow DOM
+        this.shadowRoot?.appendChild(this.navbar);
+        this.shadowRoot?.appendChild(this.Menubutton);
+        this.shadowRoot?.appendChild(this.SidebarMenu);
     }
+    
 
     getUserData() {
-        // Aquí asumimos que el usuario activo se guarda en Local Storage bajo la clave 'currentUser'
-        const userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        // Obtener los datos del usuario activo desde sessionStorage
+        const userData = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
         return userData;
     }
 
     render() {
-        const { username, followers = 0, following = 0, posts = 0 } = this.getUserData();
+        // Destructurar los datos de forma segura con valores predeterminados
+        const { name = 'Usuario', email = 'Correo no proporcionado', followers = 0, following = 0, posts = 0 } = this.getUserData();
         this.shadowRoot!.innerHTML = `
             <style>
                 :host {
-                    display: block;
-                    font-family: Arial, sans-serif;
-                    width: 100%;
-                    max-width: 768px; /* Ajusta este valor según tus necesidades de diseño */
-                    margin: auto;
-                    background-color: #fff;
-                    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100vw;
+                    height: 100vh;
+                    background-color: #EBE7DC;
+                    flex-wrap: wrap;
                 }
                 .profile-header {
                     display: flex;
-                    flex-direction: column;
-                    align-items: center;
+                    flex-direction: row;
+                    align-items: stretch;
                     padding: 20px;
-                    border-bottom: 1px solid #ccc;
+                    
+                    
+                    margin-right: 10%;
+                }
+
+                .prf-container{
+                    display: flex;
+                    justify-content: space-around;
+
+                }
+
+                .profile-id{
+                    display: flex;
+                    flex-direction: column;
+                    max-width; 40vw;
+                    justify-content: space-around ;
+                    padding: 0px;
+                    
+                    height: 300px;
+                    align-content: space-around;
+                
+                    margin-left: 10%;
+                    font-family: "Josefin Sans", sans-serif;
+                    font-size: 40px;
                 }
                 .profile-header img {
-                    width: 100px;
-                    height: 100px;
+                    width: 300px;
+                    height: 300px;
                     border-radius: 50%;
                     background: #ccc;
                 }
@@ -51,33 +95,45 @@ class UserProfile extends HTMLElement {
                     text-align: center;
                     padding: 10px;
                 }
-                .gallery {
-                    display: grid;
-                    grid-template-columns: repeat(3, 1fr);
-                    gap: 10px;
-                    padding: 10px;
-                }
-                .gallery img {
+                .profile-info {
+                    display: flex;
+                    justify-content: flex-start;
                     width: 100%;
-                    height: auto;
+                    font-family: "Josefin Sans", sans-serif;
+
+                }
+                .profile-info > div {
+                    padding: 0px;
                 }
             </style>
-            <div class="profile-header">
-                <img src="default-avatar.png" alt="User avatar">
-                <h2>${username || 'Username'}</h2>
-                <div class="profile-stats">
-                    <span>${followers} Followers</span> • <span>${following} Followed</span> • <span>${posts} Publications</span>
+            <div class="prf-container">
+                <div class="profile-header">
+                    <img src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png" alt="Avatar del usuario">
+            
                 </div>
+                <div class=profile-id>
+                    <h2 class="name">${name}</h2>
+                    <h3 class="email">${email}</h3>
+                    <div class="profile-info">${followers} Seguidores</div>
+                    <div class="profile-info">${following} Seguidos</div>
+                    <div class="profile-info">${posts} Publicaciones</div>
+                    </div>
+                    
             </div>
-            <div class="gallery">
-                <!-- Aquí irían las imágenes de las publicaciones del usuario, puedes ajustar según la lógica de obtención de imágenes -->
-                <img src="post1.jpg" alt="Post 1">
-                <img src="post2.jpg" alt="Post 2">
-                <img src="post3.jpg" alt="Post 3">
+            <div >
+                
             </div>
         `;
+
+        const menuButton = document.createElement('menu-button');
+    const sidebarMenu = document.createElement('sidebar-menu');
+    const navbarContainer = this.ownerDocument.createElement('div');
+    navbarContainer.id = 'navbar-container';
+    navbarContainer.appendChild(this.navbar);
+    navbarContainer.appendChild(menuButton);
+    this.shadowRoot?.appendChild(navbarContainer);
     }
 }
 
-customElements.define('user-profile', UserProfile);
-export default UserProfile
+customElements.define('app-profile', UserProfile);
+export default UserProfile;

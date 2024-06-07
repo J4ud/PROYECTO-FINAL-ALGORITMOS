@@ -1,5 +1,6 @@
 // <banner></banner>
 import CloseButton from '../Closebutton/Closebutton'; // Importar el componente del botón de cerrar
+import { users } from '../../data/data';
 import styles from './Popup.css'
 export enum Attr {
   'userName' = 'userName',

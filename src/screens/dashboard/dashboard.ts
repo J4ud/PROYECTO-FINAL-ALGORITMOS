@@ -3,8 +3,8 @@ import { users } from "../../data/data";
 import SearchBar from '../../components/searchBar/searchBar';
 import Navbar from '../../components/navbar/navbar';
 import Card, {Attr} from '../../components/Card/Card';
-import { MenuButton } from '../../components/index';'./components/MenuButton/MenuButton';
-import {SidebarMenu} from '../../components/index';'./components/Menu/menu';  // Asegúrate de que 'Menu/menu' es el archivo correcto para 'SidebarMenu'.
+import { MenuButton } from '../../components/index';
+import {SidebarMenu} from '../../components/index';;  // Asegúrate de que 'Menu/menu' es el archivo correcto para 'SidebarMenu'.
 import { appState } from '../../store/store';
 import { addObserver } from '../../store/store';
 

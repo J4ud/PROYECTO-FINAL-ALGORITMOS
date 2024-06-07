@@ -81,7 +81,7 @@ class SidebarMenu extends HTMLElement {
           <li><button id="profile">Profile</button></li>
           <li><button id="forum">Forum</button></li>
           <li><button id="discover">Discover</button></li>
-          <li><button id="events">Events</button></li>
+          
         </ul>
       `;
 
@@ -96,6 +96,12 @@ class SidebarMenu extends HTMLElement {
     });
     this.shadowRoot?.querySelector('#menu')?.addEventListener('click', () => {
       dispatch(ChangeScreen('login'));
+    });
+    this.shadowRoot?.querySelector('#forum')?.addEventListener('click', () => {
+      dispatch(ChangeScreen('forum'));
+    });
+    this.shadowRoot?.querySelector('#main')?.addEventListener('click', () => {
+      dispatch(ChangeScreen('dashboard'));
     });
   }
 }

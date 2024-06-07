@@ -38,6 +38,11 @@ class AppContainer extends HTMLElement {
           this.shadowRoot?.appendChild(profile)
           break;
 
+            case 'forum':
+          const forum = this.ownerDocument.createElement('app-forum');
+          this.shadowRoot?.appendChild(forum)
+          break;
+
 
             
       default:
