@@ -14,7 +14,14 @@ onAuthStateChanged(auth,(user)=>{
   }
 })
 
-const emptyState  = {
+export const initialState = {
+  screen: 'LOGIN',
+  posts: [],
+  user: '',
+  postsProfile: []
+};
+
+export const emptyState  = {
   screen: Screens.LOGIN,
   posts: [],
   user: '', 

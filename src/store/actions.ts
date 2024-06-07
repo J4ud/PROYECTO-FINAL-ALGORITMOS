@@ -28,9 +28,16 @@ export const getPostsProfileAction = async (idUser: string) => {
     };
 };
 
+
 export const setUserCredentials = (user:string) =>{
     return{
         action: 'SETUSER',
         payload: user,
+    }
+}
+export const logout = (state:any) =>{
+    return{
+        action: 'LOGOUT',
+        payload: state,
     }
 }

@@ -1,3 +1,5 @@
+
+import { emptyState } from './store';
 export const reducer = (currentAction:any, currentState:any) => {
 
     const {action, payload} = currentAction;
@@ -21,6 +23,12 @@ export const reducer = (currentAction:any, currentState:any) => {
         case 'SETUSER':
                 currentState.user =payload;
             break;
+
+            case 'LOGOUT':
+            return emptyState;
+        
+            
+            
 
             
     }

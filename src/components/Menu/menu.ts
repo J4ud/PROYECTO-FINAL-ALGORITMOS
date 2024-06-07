@@ -1,7 +1,7 @@
-import { dispatch } from "../../store/store";
+import { dispatch, emptyState } from "../../store/store";
 import { ChangeScreen } from "../../store/actions";
 import { Screens } from "../../types/navigation";
-
+import { logout } from "../../store/actions";
 // SidebarMenu.ts
 class SidebarMenu extends HTMLElement {
   private _open: boolean = false;
@@ -90,10 +90,16 @@ class SidebarMenu extends HTMLElement {
       this.addEventListeners();
     }
   }
-  logout(){
+  logout = () => {
+    // Limpiar IndexedDB
     indexedDB.deleteDatabase('firebaselocalStorageDb');
     indexedDB.deleteDatabase('firebase-heartbeat-database');
-    window.location.reload();
+
+    // Restablecer el estado de la aplicación
+    dispatch(logout(emptyState));
+
+    // Redirigir al login
+    dispatch(ChangeScreen(Screens.LOGIN));
   }
 
 
