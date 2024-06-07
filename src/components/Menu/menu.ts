@@ -109,9 +109,7 @@ class SidebarMenu extends HTMLElement {
       console.log("Profile button clicked");
       dispatch(ChangeScreen(Screens.PROFILE));
     });
-    this.shadowRoot?.querySelector('#menu')?.addEventListener('click', () => {
-      dispatch(ChangeScreen(Screens.LOGIN));
-    });
+    
     this.shadowRoot?.querySelector('#forum')?.addEventListener('click', () => {
       dispatch(ChangeScreen(Screens.FOROS));
     });
