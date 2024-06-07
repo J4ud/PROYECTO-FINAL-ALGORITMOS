@@ -1,11 +1,11 @@
 import { ChangeScreen, signUpCompleted } from "../../store/actions";
 import { dispatch } from "../../store/store";
-import { CreateUser } from "../../services/firebase";
+import { createUser } from "../../services/firebase";
 
 const formData = {
     name: '',
     lastName: '',
-    username: '',
+    userName: '',
     email: '',
     password: '',
     doB: null
@@ -48,12 +48,12 @@ class SignUpForm extends HTMLElement {
     }
     changeUsername(e: any) {
         console.log(e.target.value)
-        formData.username = e?.target?.value
+        formData.userName = e?.target?.value
     }
 
     async submitForm() {
         try {
-            const user = await CreateUser(formData);
+            const user = await createUser(formData);
             dispatch(ChangeScreen('login')); // Dispatch a la acción de completar el registro
           
         } catch (error) {
@@ -143,8 +143,9 @@ class SignUpForm extends HTMLElement {
         signUpButton.innerText = 'Sign Up';
         signUpButton.addEventListener("click", this.submitForm);
 
-        container.appendChild(usernameInput);
+       
         container.appendChild(title);
+        container.appendChild(usernameInput);
         container.appendChild(nameInput);
         container.appendChild(lastNameInput);
         container.appendChild(emailInput);

@@ -28,7 +28,7 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 // FUNCIONES PARA LOGEARME Y REGISTRARME
-export const CreateUser = (formData:any) => {
+export const createUser = (formData:any) => {
 createUserWithEmailAndPassword(auth, formData.email, formData.password)
   .then( async (userCredential) => {   
 
@@ -38,14 +38,49 @@ createUserWithEmailAndPassword(auth, formData.email, formData.password)
     
     //Agregar documento bajo ese ID
     try {
-      const where = collection(db, 'usuarios');
+      const where = doc(db, 'usuarios', user.uid);
       const data = {
-        bod: formData.doB,
+        doB: formData.doB,
         name: formData.name,
         lastName: formData.lastName,
-        userName: formData.userName
+        userName: formData.userName || 'default'
       }
-      await addDoc(where, data);
+      await setDoc(where, data);
+      alert ('Se creo el usuario')
+    } catch (error) {
+      console.log(error)
+    }
+
+
+
+
+    
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode,errorMessage)
+    // ..
+  });
+}
+export const login = (formData:any) => {
+createUserWithEmailAndPassword(auth, formData.email, formData.password)
+  .then( async (userCredential) => {   
+
+    //Obtener Id
+    const user = userCredential.user;
+    console.log(user.uid);
+    
+    //Agregar documento bajo ese ID
+    try {
+      const where = doc(db, 'usuarios', user.uid);
+      const data = {
+        doB: formData.doB,
+        name: formData.name,
+        lastName: formData.lastName,
+        userName: formData.userName || 'default'
+      }
+      await setDoc(where, data);
       alert ('Se creo el usuario')
     } catch (error) {
       console.log(error)
