@@ -5,6 +5,7 @@ import { collection, addDoc, getDocs, setDoc, doc, where } from "firebase/firest
 import { SignUpForm } from "../components";
 import { Post } from "../types/post";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { AddCards } from '../types/index';
 
 
 // TODO: Replace the following with your app's Firebase project configuration
@@ -115,6 +116,29 @@ export const getPostsProfile = async (idUser: string) => {
     });
   
     return arrayProducts;
+  };
+
+
+  export const addmensajes = async (FormData: Omit<AddCards, 'id'>) => {
+	  console.log('form', FormData);
+	  try {
+		  const docRef = await addDoc(collection(db, 'mensajes'), FormData);
+		  console.log('Document written with ID: ', docRef.id);
+	  } catch (e) {
+		  console.error('Error adding document: ', e);
+	  }
+  };
+
+  export const getmensajes = async () => {
+	  const querySnapshot = await getDocs(collection(db, 'mensajes'));
+	  const Arraymensajes: Array<AddCards> = [];
+  
+	  querySnapshot.forEach((doc: any) => {
+		  const data = doc.data() as any;
+		  Arraymensajes.push({ id: doc.id, ...data });
+	  });
+	  console.log('get', Arraymensajes);
+	  return Arraymensajes;
   };
 // Obtener datos
 // const querySnapshot = await getDocs(collection(db, "users"));

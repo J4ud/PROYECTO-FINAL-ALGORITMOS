@@ -3,6 +3,7 @@ export enum Screens {
     DASHBOARD = "DASHBOARD",
     SINGUP = "SINGUP",
     PROFILE = "PROFILE",
-    POSTING = "POSTING"
+    POSTING = "POSTING",
+    FOROS = "FOROS",
 
 }

@@ -99,7 +99,7 @@ class SidebarMenu extends HTMLElement {
       dispatch(ChangeScreen(Screens.LOGIN));
     });
     this.shadowRoot?.querySelector('#forum')?.addEventListener('click', () => {
-      dispatch(ChangeScreen(Screens.PROFILE));
+      dispatch(ChangeScreen(Screens.FOROS));
     });
     this.shadowRoot?.querySelector('#main')?.addEventListener('click', () => {
       dispatch(ChangeScreen(Screens.DASHBOARD));
