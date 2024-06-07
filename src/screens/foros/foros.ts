@@ -82,6 +82,8 @@ class Foros extends HTMLElement {
    navbarContainer.appendChild(this.navbar);
    navbarContainer.appendChild(menuButton);
    this.shadowRoot?.appendChild(navbarContainer);
+   //aquí tambien pongo el componente de foros
+   
 
    
    this.shadowRoot?.appendChild(css);
@@ -113,5 +115,5 @@ class Foros extends HTMLElement {
  }
 }
 // Define el elemento personalizado 'app-dashboard'
-customElements.define('app-dashboard', Foros);
+customElements.define('app-foros', Foros);
 export default Foros

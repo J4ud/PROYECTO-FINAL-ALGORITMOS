@@ -3,7 +3,9 @@ import { appState } from "./store/store";
 import { addObserver } from "./store/store";
 import  "./screens/dashboard/dashboard";
 import "./screens/login/login";
-import './screens/signUp/signUp'
+import "./screens/signUp/signUp";
+import "./screens/foros/foros";
+
 class AppContainer extends HTMLElement {
   constructor() {
     super(); // always call super() first in the ctor.
