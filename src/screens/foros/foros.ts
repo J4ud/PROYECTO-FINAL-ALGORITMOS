@@ -5,10 +5,11 @@ import {SidebarMenu} from '../../components/index';
 import { appState } from '../../store/store';
 import { addObserver } from '../../store/store';
 
-class Dashboard extends HTMLElement {
+class Foros extends HTMLElement {
     navbar: Navbar;
     Menubutton: MenuButton;
     SidebarMenu: SidebarMenu;
+    //aquí va lo del foro 
   
     constructor() {
       super();
@@ -112,5 +113,5 @@ class Dashboard extends HTMLElement {
  }
 }
 // Define el elemento personalizado 'app-dashboard'
-customElements.define('app-dashboard', Dashboard);
-export default Dashboard
+customElements.define('app-dashboard', Foros);
+export default Foros
