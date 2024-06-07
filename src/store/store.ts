@@ -2,17 +2,15 @@ import { reducer } from "./reducer";
 import { Screens } from "../types/navigation";
 
 const emptyState  = {
+  screen: Screens.SINGUP,
+  posts: []
 
-  
 }
-export let appState = {
-    screen: Screens.SINGUP,
-    posts: []
-  };
+export let appState = emptyState;
 
   let observers: any[] = [];
 
-
+console.log(appState)
 
 const notifyObservers = () => observers.forEach((o) => o.render());
 
