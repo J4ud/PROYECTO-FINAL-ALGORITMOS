@@ -1,135 +1,121 @@
 import { AddCards } from '../../types/index';
 import { addmensajes, getmensajes } from '../../services/firebase';
 
-
-
 const FormData: Omit<AddCards, 'id'> = {
-  message: '',
+	
+	message: '',
+	
 };
 
 class Foro extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
-    this.changemessage = this.changemessage.bind(this);
-    this.submitForm = this.submitForm.bind(this);
-  }
+	constructor() {
+		super();
+		this.attachShadow({ mode: 'open' });
+	}
 
-  connectedCallback() {
-    this.render();
-  }
+	connectedCallback() {
+		this.render();
+	}
+	changemessage(e: any) {
+		console.log(e?.target?.value);
+		
+		FormData.message = e?.target?.value;
+	}
 
-  changemessage(e: Event) {
-    const target = e.target as HTMLInputElement;
-    FormData.message = target.value;
-  }
 
-  async submitForm() {
-    await addmensajes(FormData);
-    this.render(); 
-  }
+	submitForm() {
+		console.log(FormData);
+		
+		addmensajes(FormData);
+	}
 
-  async render() {
-    if (this.shadowRoot) {
-      this.shadowRoot.innerHTML = `
-        <style>
-          :host {
+	async render() {
+		if (this.shadowRoot) {
+			this.shadowRoot.innerHTML = ` 
+			<style>
+			:host {
             display: block;
             font-family: 'Arial', sans-serif;
             max-width: 100%;
             margin: 60px;
             padding: 20px;
-            border-radius: 15px;
-            background-color: #FFFFFF;
+            border-radius: 10px;
+            background-color: #fff;
           }
           input {
-            width: 90%;
+            width: 100%;
             padding: 20px;
             border-radius: 20px 0 0 20px;
             box-sizing: border-box;
-            margin-bottom: 40px;
-            background-color: #191916;
-            color: #FFFFFF;
+			margin-bottom: 40px;
+			background-color: #191916;
+			color: #FFFFFF; 
           }
           input:focus, button:focus {
             outline: none;
-            border-color: #EBE7DC;
+            border-color: #6658D3;
           }
           button {
-            width: 10%;
+			width: 10%;
             background-color: #191916;
             color: white;
             cursor: pointer;
-            padding: 20px;
+			padding: 20px;
             margin-top: 10px;
             border-radius: 0 20px 20px 0;
             transition: background-color 0.3s;
           }
           button:hover {
-            background-color: #EBE7DC;
+            background-color: #45453E;
           }
           section {
             margin: 10px 0;
             padding: 20px;
             background-color: #191916;
-            border-radius: 5px;
+			border-radius: 5px;
+            
           }
           p {
             margin: 0;
-            color: #FFFFFF;
+			color: #FFFFFF;
           }
-          @media (max-width: 720px) {
-            input {
-              width: 70%;
-              padding: 15px;
-              border-radius: 15px 0 0 15px;
-            }
-            button {
-              width: 30%;
-              padding: 15px;
-            }
-          }
-          @media (max-width: 480px) {
-            input {
-              width: 60%;
-              padding: 10px;
-              border-radius: 10px 0 0 10px;
-            }
-            button {
-              width: 40%;
-              padding: 10px;
-            }
-          }
-        </style>
-      `;
+        
+		  </style>
+		  `;
 
-      const inputContainer = document.createElement('div');
-      inputContainer.classList.add('input-container');
+		  const inputContainer = document.createElement('div');
+		  inputContainer.classList.add('input-container');
 
-      const message = this.ownerDocument.createElement('input');
-      message.placeholder = 'Escribe un mensaje...';
-      message.addEventListener('change', this.changemessage);
-      inputContainer.appendChild(message);
+			const message = this.ownerDocument.createElement('input');
+			message.placeholder = 'Escribe un mensaje...';
+			message.addEventListener('change', this.changemessage);
+			this.shadowRoot?.appendChild(message);
+			
 
-      const save = this.ownerDocument.createElement('button');
-      save.innerText = 'ADD';
-      save.addEventListener('click', this.submitForm);
-      inputContainer.appendChild(save);
+			const save = this.ownerDocument.createElement('button');
+			save.innerText = 'ADD';
+			save.addEventListener('click', this.submitForm);
+			this.shadowRoot?.appendChild(save);
 
-      this.shadowRoot.appendChild(inputContainer);
+			// const songs = this.ownerDocument.createElement('custom-songs');
+			// this.shadowRoot?.appendChild(songs);
 
-      const messagesContainer = document.createElement('div');
-      messagesContainer.id = 'messages';
-      this.shadowRoot.appendChild(messagesContainer);
+			const messagesContainer = document.createElement('div');
+        	messagesContainer.id = 'messages';
 
-      const mensajes = await getmensajes();
-      mensajes.forEach((p: AddCards) => {
-        const forosCard = this.ownerDocument.createElement('foros-card');
-        forosCard.setAttribute('message', p.message);
-        messagesContainer.appendChild(forosCard);
-      });
-    }
-  }
+			const mensajes = await getmensajes();
+    		mensajes.forEach((p: AddCards) => {
+      		const container = this.ownerDocument.createElement("section");
+      		const name = this.ownerDocument.createElement("p");
+      		name.innerText = p.message;
+      		container.appendChild(name);
+
+    
+
+      this.shadowRoot?.appendChild(container);
+    });
+		}
+	}
 }
 
 customElements.define('custom-foro', Foro);

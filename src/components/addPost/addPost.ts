@@ -52,6 +52,7 @@ class NewPost extends HTMLElement {
         style.textContent = `
             :host {
                 display: flex;
+                flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 height: 40%;
@@ -60,16 +61,17 @@ class NewPost extends HTMLElement {
                 margin: 0;
                 padding: 0;
                 font-family: Arial, sans-serif;
-                background-color: #000;
+                background-color: #1E1E1E;
             }
 
-            .login-container {
-                padding: 20px;
-                background-color: #1E1E1E;
-                width: 300px;
-                border-radius: 0px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            .container {
+               position: absolute;
+                display: flex;
+                flex-direction: column;
                 justify-content: center;
+                align-items: center;
+                width: 50%;
+                height: 50%;
             }
 
             h2 {
@@ -78,8 +80,8 @@ class NewPost extends HTMLElement {
                 font-family: "Josefin Sans", sans-serif;
             }
 
-            input[type="email"], input[type="password"] {
-                width: 93%;
+            .addInput {
+                width: 48%;
                 padding: 10px;
                 margin: 8px 0;
                 display: block;
@@ -117,14 +119,15 @@ class NewPost extends HTMLElement {
             }
         `;
 
-        const container = document.createElement('div');
-        container.className = 'container'
+        
 
         const addButton = document.createElement('input')
+        addButton.className = 'addInput'
         addButton.placeholder = 'Link de imagen';
         addButton.addEventListener("change", this.changeImage);
 
         const descriptionInput = document.createElement('input')
+        descriptionInput.className = 'addInput'
         descriptionInput.type = 'text';
         descriptionInput.placeholder = 'Description';
         descriptionInput.addEventListener("change", this.changeDescription);
@@ -134,12 +137,12 @@ class NewPost extends HTMLElement {
         submitButton.innerText = 'Submit';
         submitButton.addEventListener("click", this.submitForm);
         
-        container.appendChild(addButton);
-        container.appendChild(descriptionInput);
-        container.appendChild(submitButton);
+        this.shadowRoot?.appendChild(addButton);
+        this.shadowRoot?.appendChild(descriptionInput);
+        this.shadowRoot?.appendChild(submitButton);
 
         this.shadowRoot?.appendChild(style);
-        this.shadowRoot?.appendChild(container);
+        
     }
 }
 

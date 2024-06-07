@@ -49,7 +49,8 @@ class Dashboard extends HTMLElement {
       css.textContent = `
         :host {
           background-color: #EBE7DC;
-          display: flex;
+          display: flex
+          flex-direction: column;
         }
 
         .cards-container {

@@ -1,5 +1,5 @@
 .search-bar {
-    display: flex; /* Usar flexbox para colocar los elementos en línea */
+    display: block; /* Usar flexbox para colocar los elementos en línea */
     width: 70%; /* Ancho deseado */
     padding: 0px; /* Espacio interno */
     margin: 90px auto;
