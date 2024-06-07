@@ -2,12 +2,15 @@ import { reducer } from "./reducer";
 import { Screens } from "../types/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../services/firebase";
+import { ChangeScreen } from "./actions";
 
 onAuthStateChanged(auth,(user)=>{
   if(user){
-    console.log(user);
+    user.uid !==null ? dispatch(setUserCredentials(user.uid)) : '';
+    dispatch(ChangeScreen(Screens.DASHBOARD))
   }else{
     console.log('No hay usuario')
+    dispatch(ChangeScreen(Screens.LOGIN))
   }
 })
 
