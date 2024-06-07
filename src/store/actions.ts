@@ -19,3 +19,10 @@ export const getPostsAction = async () => {
         payload: posts
     }
 }
+
+export const setUserCredentials = (user:string) =>{
+    return{
+        action: 'SETUSER',
+        payload: user,
+    }
+}

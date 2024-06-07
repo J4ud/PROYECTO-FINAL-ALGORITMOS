@@ -2,7 +2,7 @@ import { reducer } from "./reducer";
 import { Screens } from "../types/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../services/firebase";
-import { ChangeScreen } from "./actions";
+import { ChangeScreen, setUserCredentials } from "./actions";
 
 onAuthStateChanged(auth,(user)=>{
   if(user){
@@ -16,7 +16,8 @@ onAuthStateChanged(auth,(user)=>{
 
 const emptyState  = {
   screen: Screens.LOGIN,
-  posts: []
+  posts: [],
+  user: {}
 
 }
 export let appState = emptyState;

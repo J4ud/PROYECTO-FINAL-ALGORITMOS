@@ -3,10 +3,9 @@ export const reducer = (currentAction:any, currentState:any) => {
     const {action, payload} = currentAction;
 
     switch (action) {
-            case 'ChangeScreen':
+        case 'ChangeScreen':
             currentState.screen =payload;
         break;
-
 
         case 'signUpCompleted':
                 currentState.screen =payload;
@@ -15,6 +14,12 @@ export const reducer = (currentAction:any, currentState:any) => {
         case 'GETPOSTS':
                 currentState.posts =payload;
             break;
+
+        case 'SETUSER':
+                currentState.user =payload;
+            break;
+
+            
     }
     return currentState;
 }
