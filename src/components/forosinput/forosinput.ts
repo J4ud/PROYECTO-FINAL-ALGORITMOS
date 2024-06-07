@@ -53,7 +53,7 @@ class Foro extends HTMLElement {
           }
           input:focus, button:focus {
             outline: none;
-            border-color: #6658D3;
+            border-color: #EBE7DC;
           }
           button {
             width: 10%;
