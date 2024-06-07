@@ -6,6 +6,8 @@ import { SignUpForm } from "../components";
 import { Post } from "../types/post";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { AddCards } from '../types/index';
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { get } from "firebase/database";
 
 
 // TODO: Replace the following with your app's Firebase project configuration
@@ -24,6 +26,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 export const auth = getAuth(app);
+const storage = getStorage()
 
 // FUNCIONES PARA LOGEARME Y REGISTRARME
 export const createUser = (formData:any) => {
@@ -138,6 +141,13 @@ export const getPostsProfile = async (idUser: string) => {
 	  console.log('get', Arraymensajes);
 	  return Arraymensajes;
   };
+
+  export const uploadFile = async (file:File) => {
+    const storageRef = ref(storage, 'imgsProfile/' + file.name);
+    uploadBytes(storageRef, file).then((snapshot) => {
+      console.log('Uploaded a blob or file!');
+    });
+  }
 // Obtener datos
 // const querySnapshot = await getDocs(collection(db, "users"));
 // querySnapshot.forEach((doc) => {

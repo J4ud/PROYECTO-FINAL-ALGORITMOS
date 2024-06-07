@@ -145,8 +145,8 @@ class SignUpForm extends HTMLElement {
         const imginput  = document.createElement('input');
         imginput.type = 'file';
         imginput.addEventListener("change", () =>{
-            console.log(imginput.files)
-            const file = imginput.files
+            console.log(imginput.files?.[0]);
+            const file = imginput.files?.[0]
         });
         
 

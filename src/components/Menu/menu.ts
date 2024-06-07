@@ -82,6 +82,7 @@ class SidebarMenu extends HTMLElement {
           <li><button id="profile">Profile</button></li>
           <li><button id="forum">Forum</button></li>
           <li><button id="posting">Posting</button></li>
+          <li><button id="logout">Log Out</button></li>
           
         </ul>
       `;
@@ -89,6 +90,13 @@ class SidebarMenu extends HTMLElement {
       this.addEventListeners();
     }
   }
+  logout(){
+    indexedDB.deleteDatabase('firebaselocalStorageDb');
+    indexedDB.deleteDatabase('firebase-heartbeat-database');
+    window.location.reload();
+  }
+
+
 
   addEventListeners() {
     this.shadowRoot?.querySelector('#profile')?.addEventListener('click', () => {
@@ -107,8 +115,12 @@ class SidebarMenu extends HTMLElement {
     this.shadowRoot?.querySelector('#posting')?.addEventListener('click', () => {
       dispatch(ChangeScreen(Screens.POSTING));
     });
+
+    const logoutButton = this.shadowRoot?.querySelector('#logout')?.addEventListener('click',this.logout);
+  
+    };
   }
-}
+
 
 customElements.define('sidebar-menu', SidebarMenu);
 export default SidebarMenu;
