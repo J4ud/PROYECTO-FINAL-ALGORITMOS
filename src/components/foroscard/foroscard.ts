@@ -1,6 +1,7 @@
 import './foroscard.css';
 import { AddCards } from '../../types/index';
 import { addmensajes } from '../../services/indexs';
+import '../forosinput/forosinput'
 
 const FormData: Omit<AddCards, 'id'> = {
   message: '',
@@ -53,7 +54,6 @@ const FormData: Omit<AddCards, 'id'> = {
       message.addEventListener('change', this.changemessage);
       this.shadowRoot?.appendChild(message);
       
-
       const save = this.ownerDocument.createElement('button');
       save.innerText = 'ADD';
       save.addEventListener('click', this.submitForm);
