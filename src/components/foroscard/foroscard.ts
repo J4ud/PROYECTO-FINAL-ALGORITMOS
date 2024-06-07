@@ -1,44 +1,47 @@
-// import { AddCards } from '../../types/index';
-// import { getmensajes } from '../../services/indexs';
+import './foroscard.css';
 
-// const FormData: Omit<AddCards, 'id'> = {
+class ForosCard extends HTMLElement {
+  message?: string;
 
-//    message: '',
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
 
-// };
+  static get observedAttributes() {
+    return ['message'];
+  }
 
-// class ForosCard extends HTMLElement {
-//    constructor() {
-//        super();
-//        this.attachShadow({ mode: 'open' });
-//    }
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'message') {
+      this.message = newValue;
+      this.render();
+    }
+  }
 
-//    connectedCallback() {
-//        this.render();
-//    }
+  connectedCallback() {
+    this.render();
+  }
 
-//    async render() {
-//        const songs = await getmensajes();
-//        songs.forEach((p: AddCards) => {
-//            const container = this.ownerDocument.createElement('section');
+  render() {
+    if (this.shadowRoot) {
+      this.shadowRoot.innerHTML = `
+        <style>
+          :host {
+            display: block;
+            margin: 10px 0;
+            padding: 20px;
+            background-color: #191916;
+            border-radius: 5px;
+            color: #FFFFFF;
+            font-family: 'Arial', sans-serif;
+          }
+        </style>
+        <p>${this.message ?? ''}</p>
+      `;
+    }
+  }
+}
 
-
-//            const message = this.ownerDocument.createElement('p');
-//            message.innerText =p.message;
-//            container.appendChild(message);
-
-//            this.shadowRoot?.appendChild(container);
-//        });
-//    }
-// }
-
-
-// const mensajes = await getmensajes();
-//     		mensajes.forEach((p: AddCards) => {
-//       		const container = this.ownerDocument.createElement("section");
-//       		const name = this.ownerDocument.createElement("h3");
-//       		name.innerText = p.message;
-//       		container.appendChild(name);
-
-// customElements.define('custom-songs', ForosCard);
-// export default ForosCard;
+customElements.define('foros-card', ForosCard);
+export default ForosCard;
