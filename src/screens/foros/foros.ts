@@ -32,47 +32,6 @@ class Foros extends HTMLElement {
    console.log(appState)
    const css = this.ownerDocument.createElement("style");
    css.textContent = `
-     .cards-container {
-       max-width: 100%;
-       column-count: 4;
-       column-width: calc(20% - 5px);
-       column-gap: 10px;
-       margin: 10%
-       
-       
-       
-       
-     }
-     .image-button img{
-       object-fit: cover;
-     }
-
-     .card {
-       width: 100%;
-       height: auto;
-       margin-bottom: 0px;
-       object-fit: cover;
-     }
-
-     .card img {
-       width: 100%;
-       height: auto;
-       display: block
-     }
-     @media (max-width: 720px) {
-       .cards-container {
-         column-count: 3;
-         margin-top: 150px;
-       }
-       
-     } 
-     @media (max-width: 480px) {
-       .cards-container {
-           column-count: 2; /* Cambiamos el número de columnas a 2 */
-           margin-top: 120px;
-       }
-     }
-
    `;
    
    const menuButton = document.createElement('menu-button');
@@ -98,22 +57,23 @@ class Foros extends HTMLElement {
    searchContainer.id = 'search-container';
    this.shadowRoot?.appendChild(searchContainer);
  }
+//AH VRGA YA VÍ
 
  // Método para renderizar los caracteres (usuarios) como tarjetas
- renderCharacters(data: any[]) {
-   const cardsContainer = this.ownerDocument.createElement('div');
-   cardsContainer.className = 'cards-container';
+//  renderCharacters(data: any[]) {
+//    const cardsContainer = this.ownerDocument.createElement('div');
+//    cardsContainer.className = 'cards-container';
 
-//    data.forEach((user: any) => {
-//      const card = new Card();
-//      card.setAttribute(Attr.image, user.image);
-//      card.className = 'card';
-//      this.cardsContainer.appendChild(card);
-//    });
+// //    data.forEach((user: any) => {
+// //      const card = new Card();
+// //      card.setAttribute(Attr.image, user.image);
+// //      card.className = 'card';
+// //      this.cardsContainer.appendChild(card);
+// //    });
 
-   this.shadowRoot?.appendChild(cardsContainer);
+//    this.shadowRoot?.appendChild(cardsContainer);
+//  }
  }
-}
-// Define el elemento personalizado 'app-dashboard'
+// // Define el elemento personalizado 'app-dashboard'
 customElements.define('app-foros', Foros);
-export default Foros
+export default Foros;

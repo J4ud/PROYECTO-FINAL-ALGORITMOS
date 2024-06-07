@@ -30,4 +30,5 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist'),
 	},
 	performance: {  hints: false,  maxEntrypointSize: 512000,  maxAssetSize: 512000, },
+	experiments: { topLevelAwait: true },
 };
