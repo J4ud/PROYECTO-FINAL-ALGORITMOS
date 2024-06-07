@@ -40,7 +40,7 @@ class Foro extends HTMLElement {
             margin: 60px;
             padding: 20px;
             border-radius: 15px;
-            background-color: #fff;
+            background-color: #FFFFFF;
           }
           input {
             width: 90%;
@@ -66,7 +66,7 @@ class Foro extends HTMLElement {
             transition: background-color 0.3s;
           }
           button:hover {
-            background-color: #45453E;
+            background-color: #EBE7DC;
           }
           section {
             margin: 10px 0;
