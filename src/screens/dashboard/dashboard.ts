@@ -6,7 +6,7 @@ import { MenuButton } from '../../components/index';
 import { SidebarMenu } from '../../components/index';  // Asegúrate de que 'Menu/menu' es el archivo correcto para 'SidebarMenu'.
 import { appState, addObserver, dispatch } from '../../store/store';
 import { getPostsAction } from '../../store/actions';
-
+import { NewPost } from '../../components/index';
 // <index></index>
 class Dashboard extends HTMLElement {
   searchBar: SearchBar;
@@ -14,7 +14,7 @@ class Dashboard extends HTMLElement {
   cardsContainer: HTMLDivElement;
   Menubutton: MenuButton;
   SidebarMenu: SidebarMenu;
-
+  addpost: NewPost;
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -24,6 +24,7 @@ class Dashboard extends HTMLElement {
     this.navbar = new Navbar();
     this.SidebarMenu = new SidebarMenu();
     this.Menubutton = new MenuButton();
+    this.addpost = new NewPost();
 
     this.cardsContainer = this.ownerDocument.createElement('div');
     this.cardsContainer.className = 'cards-container';
@@ -48,9 +49,11 @@ class Dashboard extends HTMLElement {
       css.textContent = `
         :host {
           background-color: #EBE7DC;
+          display: flex;
         }
 
         .cards-container {
+          margin-top: 50%;
           max-width: 100%;
           column-count: 4;
           column-width: calc(20% - 5px);
@@ -88,9 +91,7 @@ class Dashboard extends HTMLElement {
             margin-top: 120px;
           }
         }
-          .post-form{
-          position: fixed;
-          }
+          
       `;
 
       // Limpiar el shadowRoot existente antes de agregar nuevos elementos
@@ -98,10 +99,11 @@ class Dashboard extends HTMLElement {
 
       const sidebarMenu = document.createElement('sidebar-menu');
       const navbarContainer = this.ownerDocument.createElement('div');
-      
       navbarContainer.id = 'navbar-container';
       navbarContainer.appendChild(this.navbar);
-
+      
+      
+      
       
       this.shadowRoot.appendChild(navbarContainer);
       this.shadowRoot.appendChild(css);
@@ -112,6 +114,9 @@ class Dashboard extends HTMLElement {
       searchContainer.id = 'search-container';
       searchContainer.appendChild(this.searchBar);
       this.shadowRoot.appendChild(searchContainer);
+
+
+      
 
       // Limpiar el contenido de cardsContainer antes de agregar nuevos elementos
       this.cardsContainer.innerHTML = '';

@@ -8,7 +8,7 @@ onAuthStateChanged(auth,(user)=>{
   if(user){
     user.uid !==null ? dispatch(setUserCredentials(user.uid)) : '';
     dispatch(ChangeScreen(Screens.DASHBOARD))
-  }else{
+  } else{
     console.log('No hay usuario')
     dispatch(ChangeScreen(Screens.LOGIN))
   }
@@ -25,7 +25,7 @@ export let appState = emptyState;
 
   let observers: any[] = [];
 
-console.log(appState)
+
 
 const notifyObservers = () => observers.forEach((o) => o.render());
 

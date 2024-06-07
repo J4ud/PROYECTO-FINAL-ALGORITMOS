@@ -5,6 +5,8 @@ import  "./screens/dashboard/dashboard";
 import "./screens/login/login";
 import './screens/signUp/signUp'
 import './screens/profile/profile'
+import './screens/post/posting'
+
 import { Screens } from "./types/navigation";
 class AppContainer extends HTMLElement {
   constructor() {
@@ -38,6 +40,11 @@ class AppContainer extends HTMLElement {
             case Screens.PROFILE:
           const profile = this.ownerDocument.createElement('app-profile');
           this.shadowRoot?.appendChild(profile)
+          break;
+
+            case Screens.POSTING:
+          const posting = this.ownerDocument.createElement('app-posting');
+          this.shadowRoot?.appendChild(posting)
           break;
 
           //   case 'forum':

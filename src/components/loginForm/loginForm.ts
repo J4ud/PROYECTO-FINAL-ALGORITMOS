@@ -2,6 +2,7 @@ import { dispatch } from "../../store/store";
 import { ChangeScreen } from "../../store/actions";
 import { login } from "../../services/firebase";
 import { Screens } from "../../types/navigation";
+
 // Definir una interfaz para el usuario
 interface User {
     name: string;
@@ -24,40 +25,40 @@ class LoginForm extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.render();
     }
 
     connectedCallback() {
-        this.shadowRoot?.querySelector('#logButton')?.addEventListener('click', (event) => {
-            event.preventDefault(); // Previene el comportamiento por defecto del formulario
-            
-        });
-      
+        this.render();
+
+        const emailInput = this.shadowRoot?.querySelector('input[type="email"]');
+        const passwordInput = this.shadowRoot?.querySelector('input[type="password"]');
+        const loginButton = this.shadowRoot?.querySelector('#logButton');
+
+        emailInput?.addEventListener('input', this.changeEmail.bind(this));
+        passwordInput?.addEventListener('input', this.changePassword.bind(this));
+        loginButton?.addEventListener('click', this.submitForm.bind(this));
     }
 
-    changeEmail(e: any) {
-        console.log(e.target.value)
-        formData.email = e?.target?.value
-    }
-    
-    changePassword(e: any) {
-        console.log(e.target.value)
-        formData.password = e?.target?.value
+    changeEmail(e: Event) {
+        const target = e.target as HTMLInputElement;
+        formData.email = target.value;
     }
 
-    async submitForm() {
-        login(formData);
-            try {
-               
-                const user = await login(formData);
-               
-                dispatch(ChangeScreen(Screens.DASHBOARD)); // Dispatch a la acción de completar el registro
-                
-            } catch (error) {
-                console.error('Error logging user:', error);
-            }
+    changePassword(e: Event) {
+        const target = e.target as HTMLInputElement;
+        formData.password = target.value;
+    }
+
+    async submitForm(event: Event) {
+        event.preventDefault();
+        try {
+            const user = await login(formData);
+            console.log('User logged in:', user);
+            dispatch(ChangeScreen(Screens.DASHBOARD)); // Dispatch a la acción de completar el registro
+        } catch (error) {
+            console.error('Error logging user:', error);
         }
-    
+    }
 
     render() {
         const style = document.createElement('style');
@@ -146,7 +147,6 @@ class LoginForm extends HTMLElement {
         const loginButton = this.ownerDocument.createElement('button');
         loginButton.id = 'logButton';
         loginButton.innerText = 'Log In';
-        loginButton.addEventListener("click", this.submitForm);
 
         const signUpButton = this.ownerDocument.createElement('button');
         signUpButton.id = 'SgButton';

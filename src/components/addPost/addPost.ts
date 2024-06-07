@@ -15,7 +15,7 @@ const formData = {
     userId: ''
 }
 
-class formPost extends HTMLElement {
+class NewPost extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -51,21 +51,74 @@ class formPost extends HTMLElement {
         const style = document.createElement('style');
         style.textContent = `
             :host {
-                display: block;
-                position: fixed;
-                margin: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 40%;
+                width: 40%;
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                background-color: #000;
+            }
+
+            .login-container {
                 padding: 20px;
                 background-color: #1E1E1E;
-                color: white;
-                font-family: Arial, sans-serif;
                 width: 300px;
-                border-radius: 10px;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-                z-index: 9999;
-    }
+                border-radius: 0px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.5);
+                justify-content: center;
+            }
+
+            h2 {
+                text-align: center;
+                color: white;
+                font-family: "Josefin Sans", sans-serif;
+            }
+
+            input[type="email"], input[type="password"] {
+                width: 93%;
+                padding: 10px;
+                margin: 8px 0;
+                display: block;
+                border: none;
+                border-radius: 50px;
+                background-color: #B2AFA7;
+                color: white;
+                font-family: "Josefin Sans", sans-serif;
+            }
+
+            button {
+                width: 48%;
+                padding: 10px;
+                margin-top: 10px;
+                margin-right: 4%;
+                border: none;
+                border-radius: 50px;
+                background-color: #EBE7DC;
+                color: #1E1E1E;
+                cursor: pointer;
+                float: left;
+                font-family: "Josefin Sans", sans-serif;
+            }
+
+            button:hover {
+                background-color: #0A58CA;
+            }
+
+            button:last-of-type {
+                margin-right: 0;
+            }
+
+            .clear {
+                clear: both;
+            }
         `;
 
         const container = document.createElement('div');
+        container.className = 'container'
 
         const addButton = document.createElement('input')
         addButton.placeholder = 'Link de imagen';
@@ -90,5 +143,5 @@ class formPost extends HTMLElement {
     }
 }
 
-customElements.define('add-post', formPost);
-export default formPost;
+customElements.define('add-post', NewPost);
+export default NewPost;

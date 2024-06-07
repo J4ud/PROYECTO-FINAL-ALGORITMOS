@@ -6,7 +6,7 @@ import { SignUpForm } from "../components";
 import { Post } from "../types/post";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
-onAuthStateChanged
+
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://support.google.com/firebase/answer/7015592
 const firebaseConfig = {
@@ -21,10 +21,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-// Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
-
 export const auth = getAuth(app);
 
 // FUNCIONES PARA LOGEARME Y REGISTRARME
@@ -70,6 +67,7 @@ signInWithEmailAndPassword(auth, formData.email, formData.password)
     //Obtener Id
     const user = userCredential.user;
     console.log(user.uid);
+    console.log('Sesión iniciada')
 
 
     
@@ -106,18 +104,18 @@ export const getPosts = async () =>{
   }
 
 
-export const getPostsProfile = async (idUser: string) =>{
-  const q = query(collection(db, "posts"), where("idUser","==",idUser));
-  const querySnapshot = await getDocs(q);
-  const arrayProducts: Array<Post> = [];
-
-  querySnapshot.forEach((doc) => {
-     const data = doc.data() as any;
-     arrayProducts.push({ id: doc.id, ...data});
-  });
-
-  return arrayProducts
-  }
+export const getPostsProfile = async (idUser: string) => {
+    const q = query(collection(db, 'posts'), where('idUser', '==', idUser));
+    const querySnapshot = await getDocs(q);
+    const arrayProducts: Array<Post> = [];
+  
+    querySnapshot.forEach((doc) => {
+      const data = doc.data() as any;
+      arrayProducts.push({ id: doc.id, ...data });
+    });
+  
+    return arrayProducts;
+  };
 // Obtener datos
 // const querySnapshot = await getDocs(collection(db, "users"));
 // querySnapshot.forEach((doc) => {

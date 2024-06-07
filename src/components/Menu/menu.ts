@@ -81,7 +81,7 @@ class SidebarMenu extends HTMLElement {
           <li><button id="main">Main</button></li>
           <li><button id="profile">Profile</button></li>
           <li><button id="forum">Forum</button></li>
-          <li><button id="discover">Discover</button></li>
+          <li><button id="posting">Posting</button></li>
           
         </ul>
       `;
@@ -103,6 +103,9 @@ class SidebarMenu extends HTMLElement {
     });
     this.shadowRoot?.querySelector('#main')?.addEventListener('click', () => {
       dispatch(ChangeScreen(Screens.DASHBOARD));
+    });
+    this.shadowRoot?.querySelector('#posting')?.addEventListener('click', () => {
+      dispatch(ChangeScreen(Screens.POSTING));
     });
   }
 }

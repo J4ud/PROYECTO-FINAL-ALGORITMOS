@@ -15,7 +15,7 @@ export const reducer = (currentAction:any, currentState:any) => {
                 currentState.posts =payload;
             break;
         case 'GETPOSTSPROFILE':
-                currentState.postsProfile =payload;
+                currentState.postsProfile = payload;
             break;
 
         case 'SETUSER':

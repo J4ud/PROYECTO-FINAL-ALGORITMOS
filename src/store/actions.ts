@@ -25,8 +25,8 @@ export const getPostsProfileAction = async (idUser: string) => {
     return{
         action: 'GETPOSTSPROFILE',
         payload: postsProfile
-    }
-}
+    };
+};
 
 export const setUserCredentials = (user:string) =>{
     return{
