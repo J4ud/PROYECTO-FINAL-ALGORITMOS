@@ -1,11 +1,12 @@
-// <Card></Card>
 import './Card.css';
 import Popup from '../PopUp/PopUp';
 import styles from '../PopUp/Popup.css'
+import { appState, addObserver, dispatch } from '../../store/store';
+import { getPostsAction } from '../../store/actions';
 
 export enum Attr {
   'userName' = 'userName',
-  'uid'= 'uid',
+  'id'= 'id',
   'image'= 'image',
   'description'= 'description',
   'email'= 'email',
@@ -34,7 +35,7 @@ class Card extends HTMLElement {
 
   static get observedAttributes(){
     const attrs: Record<Attr,null> = {
-      uid: null,
+      id: null,
       userName: null,
       image: null,
       description: null,
@@ -47,7 +48,7 @@ class Card extends HTMLElement {
 
     attributeChangedCallback(propName: Attr, oldVal: string | undefined, newVal:string | undefined) {
       switch (propName) {
-        case Attr.uid:
+        case Attr.id:
             this.uid = newVal ? Number(newVal): undefined;
           break;
       
@@ -57,8 +58,8 @@ class Card extends HTMLElement {
       }
       this.render();
     }
-
-
+    
+    
    
 
     
@@ -67,131 +68,112 @@ class Card extends HTMLElement {
       if (this.shadowRoot) {
         // Limpiar el contenido existente en el shadowRoot
         this.shadowRoot.innerHTML = '';
-
-        const css = this.ownerDocument.createElement("style");
+  
+        const css = this.ownerDocument.createElement('style');
         css.textContent = `
-        picture card{
-
-        }
-        .card {
-          background-color: rgb(255, 255, 255, 0);
-          width: 100%; /* Ocupar el 100% del ancho del contenedor padre */
-          max-width: 100%; /* Establecer un ancho máximo para evitar que las tarjetas se expandan demasiado */
-          border-radius: 0em;
-          margin-bottom: 20px; /* Espacio entre tarjetas */
-          overflow: hidden; /* Evitar que el contenido se desborde */
-          position: relative;
-          display: inline-block;
-      }
-      
-        img {
-            width: 100%; /* La imagen ocupará todo el ancho de la tarjeta */
-            height: auto; /* La altura se ajustará automáticamente para mantener la proporción */
-        }
-        .image-button img{
-          width: 100%;
-          margin-bottom: 0;
-        }
-      button {
-          width: 100%; /* El botón ocupará todo el ancho de la tarjeta */
-          background-color: transparent; /* Fondo transparente para que no se vea */
-          border: none; /* Sin borde */
-          padding: 0; /* Sin relleno */
-          cursor: pointer; /* Cambiar el cursor al pasar por encima */
-          display: inline-block;
-      }
-      
-      #button-close {
-          padding: 0.5em;
-          background-color: white;
-          color: black;
-      }
-      
-      .none {
-          display: none;
-      }
-      .display{
-        position: absolute; /* Posiciona el elemento de manera absoluta dentro del contenedor padre */
-        top: 0; /* Ajusta la posición desde la parte superior */
-        left: 0; /* Ajusta la posición desde la izquierda */
-        width: 100%; /* Ocupa todo el ancho del contenedor padre */
-        height: 100%; /* Ocupa toda la altura del contenedor padre */
-        background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
-        z-index: 1; 
-      }
-
-      
-      
-      
-      
-            
+          .card {
+            background-color: rgb(255, 255, 255, 0);
+            width: 100%;
+            max-width: 100%;
+            border-radius: 0em;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+            display: inline-block;
+          }
+  
+          img {
+            width: 100%;
+            height: auto;
+          }
+  
+          .image-button img {
+            width: 100%;
+            margin-bottom: 0;
+          }
+  
+          button {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            display: inline-block;
+          }
+  
+          #button-close {
+            padding: 0.5em;
+            background-color: white;
+            color: black;
+          }
+  
+          .none {
+            display: none;
+          }
+  
+          .display {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+          }
         `;
-
+  
         // Adjuntar el estilo al shadowRoot
-        this.shadowRoot?.appendChild(css);
-
+        this.shadowRoot.appendChild(css);
+  
         const cardDiv = this.ownerDocument.createElement('div');
         cardDiv.className = 'card';
-
+  
         const image = this.ownerDocument.createElement('img');
         image.src = this.image || '';
         image.alt = 'Character Image';
-
+  
         const buttonImage = this.ownerDocument.createElement('button');
         buttonImage.className = 'image-button';
-        
+  
         buttonImage.appendChild(image);
-
+  
         cardDiv.appendChild(buttonImage);
-        this.shadowRoot.appendChild(cardDiv)
-
-        const popUp = this.ownerDocument.createElement('section')
-        popUp.className = 'none';
-        
+        this.shadowRoot.appendChild(cardDiv);
+  
         buttonImage.addEventListener('click', () => {
-          // Crear una instancia de Popup
-          const popup = new Popup();
-      
-          // Asignar propiedades al pop-up
-          popup.userName = this.userName;
-          popup.image = this.image;
-          popup.email = this.email;
-      
-          // Agregar el pop-up al body del documento
-          document.body.appendChild(popup);
-      });
-          
-        
+          // Obtener el post correspondiente del appState
+          const post = appState.posts.find((post: any) => post.id === this.uid) as any;
+  
+          if (post) {
+            // Crear una instancia de Popup
+            const popup = new Popup();
+            popup.setAttribute(Attr.image, post.image);
+            popup.setAttribute(Attr.userName, post.userName);
+            popup.setAttribute(Attr.description, post.description);
+            popup.className = 'card';
+  
+            // Agregar el pop-up al body del documento
+            document.body.appendChild(popup);
+          }
+        });
+  
+        const popUp = this.ownerDocument.createElement('section');
+        popUp.className = 'none';
+  
         const hidePopUp = () => {
           popUp.classList.remove('popUp');
           popUp.classList.add('none');
-      };
-
+        };
+  
         const closeButton = this.ownerDocument.createElement('button');
-            closeButton.id = 'button-close'
-            closeButton.textContent = 'Close';
-            closeButton.addEventListener('click', hidePopUp);
-
-            popUp.appendChild(closeButton);
-
-
-            this.shadowRoot.appendChild(popUp);
-        // Adjuntar la tarjeta al shadowRoot
-        
-        
+        closeButton.id = 'button-close';
+        closeButton.textContent = 'Close';
+        closeButton.addEventListener('click', hidePopUp);
+  
+        popUp.appendChild(closeButton);
+        this.shadowRoot.appendChild(popUp);
       }
     }
-  
-  
-  connectedCallback() {
-    this.render();
-    
   }
-  disconnectedCallback() {
-    
-  }
- 
-
-}
 export default Card;
 customElements.define('picture-card', Card);

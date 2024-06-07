@@ -1,15 +1,38 @@
-import { users } from "../../data/data";
 
+import Navbar from '../../components/navbar/navbar';
+import  MenuButton  from '../../components/MenuButton/MenuButton';
+import SidebarMenu from '../../components/Menu/menu'
+import { appState } from '../../store/store';
 class UserProfile extends HTMLElement {
+   
+    navbar: Navbar;
+   
+    Menubutton: MenuButton;
+    SidebarMenu: SidebarMenu;
 
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        
+    this.navbar = new Navbar();
+    this.SidebarMenu = new SidebarMenu();
+    this.Menubutton = new MenuButton();
     }
 
     connectedCallback() {
         this.render();
+    
+        // Crear e instanciar correctamente los componentes
+        this.navbar = new Navbar();
+       
+        this.SidebarMenu = new SidebarMenu();
+    
+        // Añadir al shadow DOM
+        this.shadowRoot?.appendChild(this.navbar);
+     
+        this.shadowRoot?.appendChild(this.SidebarMenu);
     }
+    
 
     getUserData() {
         // Obtener los datos del usuario activo desde sessionStorage
@@ -51,9 +74,12 @@ class UserProfile extends HTMLElement {
                 .profile-id{
                     display: flex;
                     flex-direction: column;
+                    max-width; 40vw;
                     justify-content: space-around ;
-                    padding: 20px;
-                    background-color: #fff;
+                    padding: 0px;
+                    
+                    height: 300px;
+                    align-content: space-around;
                 
                     margin-left: 10%;
                     font-family: "Josefin Sans", sans-serif;
@@ -77,7 +103,7 @@ class UserProfile extends HTMLElement {
 
                 }
                 .profile-info > div {
-                    padding: 10px;
+                    padding: 0px;
                 }
             </style>
             <div class="prf-container">
@@ -98,8 +124,13 @@ class UserProfile extends HTMLElement {
                 
             </div>
         `;
+
+       
+   
+    ;
+    
     }
 }
 
-customElements.define('app-profile', UserProfile);
+customElements.define('user-profile', UserProfile);
 export default UserProfile;

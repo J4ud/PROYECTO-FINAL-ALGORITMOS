@@ -1,8 +1,34 @@
 import { reducer } from "./reducer";
+import { Screens } from "../types/navigation";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../services/firebase";
+import { ChangeScreen, setUserCredentials } from "./actions";
 
-export let appState = {
-    screen: 'profile',
-  };
+onAuthStateChanged(auth,(user)=>{
+  if(user){
+    user.uid !==null ? dispatch(setUserCredentials(user.uid)) : '';
+    dispatch(ChangeScreen(Screens.DASHBOARD))
+  } else{
+    console.log('No hay usuario')
+    dispatch(ChangeScreen(Screens.LOGIN))
+  }
+})
+
+export const initialState = {
+  screen: 'LOGIN',
+  posts: [],
+  user: '',
+  postsProfile: []
+};
+
+export const emptyState  = {
+  screen: Screens.LOGIN,
+  posts: [],
+  user: '', 
+  postsProfile: []
+
+}
+export let appState = emptyState;
 
   let observers: any[] = [];
 

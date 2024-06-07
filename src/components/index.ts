@@ -7,4 +7,6 @@ export{default as MenuButton} from '../components/MenuButton/MenuButton'
 export{default as LoginForm} from '../components/loginForm/loginForm'
 export{default as SignUpForm} from '../components/registerForm/signUpForm'
 export{default as UserProfile} from '../components/userProfile/userProfile'
-
+export{default as formPost} from '../components/addPost/addPost'
+export{default as postsProfile} from '../components/profilePosts/profilePosts'
+export{default as NewPost} from '../components/addPost/addPost'

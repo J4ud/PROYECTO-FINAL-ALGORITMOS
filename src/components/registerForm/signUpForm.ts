@@ -1,5 +1,17 @@
-import { signUpCompleted } from "../../store/actions";
-import { dispatch } from "../../store/store";
+import { ChangeScreen, signUpCompleted } from "../../store/actions";
+import { appState, dispatch } from "../../store/store";
+import { createUser } from "../../services/firebase";
+import { Screens } from "../../types/navigation";
+
+const formData = {
+    name: '',
+    lastName: '',
+    userName: '',
+    email: '',
+    password: '',
+    doB: null,
+    
+}
 
 class SignUpForm extends HTMLElement {
     constructor() {
@@ -11,87 +23,152 @@ class SignUpForm extends HTMLElement {
     connectedCallback() {
         this.shadowRoot?.querySelector('#suButton')?.addEventListener('click', (event) => {
             event.preventDefault();  // Previene la recarga de la página
-            this.handleSubmit();
+            
         });
     }
 
-    handleSubmit() {
-        const nameInput = this.shadowRoot?.querySelector('input[placeholder="Name"]') as HTMLInputElement;
-        const lastNameInput = this.shadowRoot?.querySelector('input[placeholder="Last Name"]') as HTMLInputElement;
-        const emailInput = this.shadowRoot?.querySelector('input[placeholder="Email"]') as HTMLInputElement;
-        const passwordInput = this.shadowRoot?.querySelector('input[placeholder="Password"]') as HTMLInputElement;
-        const dobInput = this.shadowRoot?.querySelector('input[type="date"]') as HTMLInputElement;
+    changeEmail(e: any) {
+        console.log(e.target.value)
+        formData.email = e?.target?.value
+    }
 
-        if (nameInput && lastNameInput && emailInput && passwordInput && dobInput) {
-            const user = {
-                name: nameInput.value,
-                lastName: lastNameInput.value,
-                email: emailInput.value,
-                password: passwordInput.value,
-                dob: dobInput.value
-            };
+    changeName(e: any) {
+        console.log(e.target.value)
+        formData.name = e?.target?.value
+    }
+    changePassword(e: any) {
+        console.log(e.target.value)
+        formData.password = e?.target?.value
+    }
+    changeDoB(e: any) {
+        console.log(e.target.value)
+        formData.doB = e?.target?.value
+    }
+    changeLastname(e: any) {
+        console.log(e.target.value)
+        formData.lastName = e?.target?.value
+    }
+    changeUsername(e: any) {
+        console.log(e.target.value)
+        formData.userName = e?.target?.value
+    }
 
-            this.saveUser(user);
-            dispatch(signUpCompleted('login'));
+    async submitForm() {
+        
+        try {
+           
+            const user = await createUser(formData);
+           
+            dispatch(ChangeScreen(Screens.LOGIN)); // Dispatch a la acción de completar el registro
+          
+        } catch (error) {
+            console.error('Error creating user:', error);
         }
     }
 
-    saveUser(user:any) {
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-        users.push(user);
-        localStorage.setItem('users', JSON.stringify(users));
-    }
+   
 
     render() {
-        if(this.shadowRoot)
-        this.shadowRoot.innerHTML = `
-            <style>
-                :host {
-                    display: block;
-                    margin: auto;
-                    padding: 20px;
-                    background-color: #1E1E1E;
-                    color: white;
-                    font-family: Arial, sans-serif;
-                    width: 300px;
-                    border-radius: 10px;
-                    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-                }
-                h2 {
-                    text-align: center;
-                }
-                input[type="text"], input[type="email"], input[type="password"], input[type="date"] {
-                    width: calc(100% - 20px);
-                    padding: 10px;
-                    margin: 10px 0;
-                    border: none;
-                    border-radius: 50px;
-                    background-color: #B2AFA7;
-                }
-                button {
-                    width: 100%;
-                    padding: 10px;
-                    margin-top: 20px;
-                    border: none;
-                    border-radius: 0px;
-                    background-color: #EBE7DC;
-                    color: #1E1E1E;
-                    cursor: pointer;
-                }
-                button:hover {
-                    background-color: black;
-                }
-            </style>
-            <div>
-                <h2>SIGN UP</h2>
-                <input type="text" placeholder="Name">
-                <input type="text" placeholder="Last Name">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <input type="date">
-                <button id="suButton" type="submit">Sign Up</button>
-            </div>
+        const style = document.createElement('style');
+        style.textContent = `
+            :host {
+                display: block;
+                margin: auto;
+                padding: 20px;
+                background-color: #1E1E1E;
+                color: white;
+                font-family: Arial, sans-serif;
+                width: 300px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            }
+            h2 {
+                text-align: center;
+            }
+            input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="files"] {
+                width: calc(100% - 20px);
+                padding: 10px;
+                margin: 10px 0;
+                border: none;
+                border-radius: 50px;
+                background-color: #B2AFA7;
+            }
+            button {
+                width: 100%;
+                padding: 10px;
+                margin-top: 20px;
+                border: none;
+                border-radius: 0px;
+                background-color: #EBE7DC;
+                color: #1E1E1E;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: black;
+            }
         `;
+
+        const container = document.createElement('div');
+
+        const title = document.createElement('h2');
+        title.innerText = 'SIGN UP';
+
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.placeholder = 'Name';
+        nameInput.addEventListener("change", this.changeName);
+
+        const usernameInput = document.createElement('input');
+        usernameInput.type = 'text';
+        usernameInput.placeholder = 'Usersame';
+        usernameInput.addEventListener("change", this.changeUsername);
+
+        const lastNameInput = document.createElement('input');
+        lastNameInput.type = 'text';
+        lastNameInput.placeholder = 'Last Name';
+        lastNameInput.addEventListener("change", this.changeLastname);
+
+        const emailInput = document.createElement('input');
+        emailInput.type = 'email';
+        emailInput.placeholder = 'Email';
+        emailInput.addEventListener("change", this.changeEmail);
+
+        const passwordInput = document.createElement('input');
+        passwordInput.type = 'password';
+        passwordInput.placeholder = 'Password';
+        passwordInput.addEventListener("change", this.changePassword);
+
+        const dobInput = document.createElement('input');
+        dobInput.type = 'date';
+        dobInput.addEventListener("change", this.changeDoB);
+
+        const imginput  = document.createElement('input');
+        imginput.type = 'file';
+        imginput.addEventListener("change", () =>{
+            console.log(imginput.files?.[0]);
+            const file = imginput.files?.[0]
+        });
+        
+
+        const signUpButton = document.createElement('button');
+        signUpButton.id = 'suButton';
+        signUpButton.type = 'submit';
+        signUpButton.innerText = 'Sign Up';
+        signUpButton.addEventListener("click", this.submitForm);
+
+       
+        container.appendChild(title);
+        container.appendChild(usernameInput);
+        container.appendChild(nameInput);
+        container.appendChild(lastNameInput);
+        container.appendChild(emailInput);
+        container.appendChild(passwordInput);
+        container.appendChild(dobInput);
+        container.appendChild(imginput);
+        container.appendChild(signUpButton);
+
+        this.shadowRoot?.appendChild(style);
+        this.shadowRoot?.appendChild(container);
     }
 }
 

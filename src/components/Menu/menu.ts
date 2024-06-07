@@ -1,6 +1,7 @@
-import { dispatch } from "../../store/store";
+import { dispatch, emptyState } from "../../store/store";
 import { ChangeScreen } from "../../store/actions";
-
+import { Screens } from "../../types/navigation";
+import { logout } from "../../store/actions";
 // SidebarMenu.ts
 class SidebarMenu extends HTMLElement {
   private _open: boolean = false;
@@ -80,28 +81,52 @@ class SidebarMenu extends HTMLElement {
           <li><button id="main">Main</button></li>
           <li><button id="profile">Profile</button></li>
           <li><button id="forum">Forum</button></li>
-          <li><button id="discover">Discover</button></li>
-          <li><button id="events">Events</button></li>
+          <li><button id="posting">Posting</button></li>
+          <li><button id="logout">Log Out</button></li>
+          
         </ul>
       `;
 
       this.addEventListeners();
     }
   }
+  logout = () => {
+    // Limpiar IndexedDB
+    indexedDB.deleteDatabase('firebaselocalStorageDb');
+    indexedDB.deleteDatabase('firebase-heartbeat-database');
+
+    // Restablecer el estado de la aplicación
+    dispatch(logout(emptyState));
+
+    // Redirigir al login
+    dispatch(ChangeScreen(Screens.LOGIN));
+  }
+
+
 
   addEventListeners() {
     this.shadowRoot?.querySelector('#profile')?.addEventListener('click', () => {
       console.log("Profile button clicked");
-      dispatch(ChangeScreen('profile'));
+      dispatch(ChangeScreen(Screens.PROFILE));
     });
     this.shadowRoot?.querySelector('#menu')?.addEventListener('click', () => {
-      dispatch(ChangeScreen('login'));
+      dispatch(ChangeScreen(Screens.LOGIN));
     });
     this.shadowRoot?.querySelector('#forum')?.addEventListener('click', () => {
-      dispatch(ChangeScreen('forum'));
+      dispatch(ChangeScreen(Screens.FOROS));
     });
+    this.shadowRoot?.querySelector('#main')?.addEventListener('click', () => {
+      dispatch(ChangeScreen(Screens.DASHBOARD));
+    });
+    this.shadowRoot?.querySelector('#posting')?.addEventListener('click', () => {
+      dispatch(ChangeScreen(Screens.POSTING));
+    });
+
+    const logoutButton = this.shadowRoot?.querySelector('#logout')?.addEventListener('click',this.logout);
+  
+    };
   }
-}
+
 
 customElements.define('sidebar-menu', SidebarMenu);
 export default SidebarMenu;
