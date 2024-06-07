@@ -48,13 +48,7 @@ class LoginForm extends HTMLElement {
     }
 
     async submitForm() {
-        try {
-            const user = await login(formData);
-            dispatch(ChangeScreen(Screens.LOGIN)); // Dispatch a la acción de completar el registro
-          
-        } catch (error) {
-            console.error('Error creating user:', error);
-        }
+        login(formData);
     }
 
     render() {

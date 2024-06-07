@@ -4,9 +4,9 @@ import { getFirestore } from "firebase/firestore";
 import { collection, addDoc, getDocs, setDoc, doc } from "firebase/firestore"; 
 import { SignUpForm } from "../components";
 import { Post } from "../types/post";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
-
+onAuthStateChanged
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://support.google.com/firebase/answer/7015592
 const firebaseConfig = {
@@ -25,7 +25,7 @@ const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
 // FUNCIONES PARA LOGEARME Y REGISTRARME
 export const createUser = (formData:any) => {

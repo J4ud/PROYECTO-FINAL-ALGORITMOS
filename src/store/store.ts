@@ -1,8 +1,18 @@
 import { reducer } from "./reducer";
 import { Screens } from "../types/navigation";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../services/firebase";
+
+onAuthStateChanged(auth,(user)=>{
+  if(user){
+    console.log(user);
+  }else{
+    console.log('No hay usuario')
+  }
+})
 
 const emptyState  = {
-  screen: Screens.DASHBOARD,
+  screen: Screens.LOGIN,
   posts: []
 
 }
