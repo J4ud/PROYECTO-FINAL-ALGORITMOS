@@ -57,6 +57,5 @@ class Foros extends HTMLElement {
     }
 }
 
-// Define el elemento personalizado 'app-foros'
 customElements.define('app-foros', Foros);
 export default Foros;
