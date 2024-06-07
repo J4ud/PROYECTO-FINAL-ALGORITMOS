@@ -39,7 +39,7 @@ class Foro extends HTMLElement {
             max-width: 100%;
             margin: 60px;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 15px;
             background-color: #fff;
           }
           input {
