@@ -47,7 +47,7 @@ class Dashboard extends HTMLElement {
         
         
         
-      }
+      };
       .image-button img{
         object-fit: cover;
       }
