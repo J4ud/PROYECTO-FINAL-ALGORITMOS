@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc, getDocs, setDoc, doc } from "firebase/firestore"; 
 import { SignUpForm } from "../components";
-
+import { Post } from "../types/post";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 
@@ -87,10 +87,23 @@ signInWithEmailAndPassword(auth, formData.email, formData.password)
 }
 
 
+export const getPosts = async () =>{
+  const querySnapshot = await getDocs(collection(db, "posts"));
+  const arrayProducts: Array<Post> = [];
 
+  querySnapshot.forEach((doc) => {
+     const data = doc.data() as any;
+     arrayProducts.push({ id: doc.id, ...data});
+  });
 
+  return arrayProducts
+  }
 // Obtener datos
 // const querySnapshot = await getDocs(collection(db, "users"));
 // querySnapshot.forEach((doc) => {
 //   console.log(doc.data());
 // });
+
+
+
+

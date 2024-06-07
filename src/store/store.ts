@@ -4,6 +4,7 @@ import { Screens } from "../types/navigation";
 
 export let appState = {
     screen: Screens.SINGUP,
+    posts: []
   };
 
   let observers: any[] = [];
