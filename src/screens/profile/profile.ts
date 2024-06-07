@@ -1,5 +1,4 @@
 import './dashboard.css';
-import { users } from "../../data/data";
 import { appState } from '../../store/store';
 
 

@@ -1,4 +1,4 @@
-import { users } from "../../data/data";
+
 import Navbar from '../../components/navbar/navbar';
 import  MenuButton  from '../../components/MenuButton/MenuButton';
 import SidebarMenu from '../../components/Menu/menu'

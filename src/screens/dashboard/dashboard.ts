@@ -1,5 +1,5 @@
 import './dashboard.css';
-import { users } from "../../data/data";
+
 import SearchBar from '../../components/searchBar/searchBar';
 import Navbar from '../../components/navbar/navbar';
 import Card, {Attr} from '../../components/Card/Card';
@@ -92,12 +92,12 @@ class Dashboard extends HTMLElement {
 
     `;
     
-    const menuButton = document.createElement('menu-button');
+    
     const sidebarMenu = document.createElement('sidebar-menu');
     const navbarContainer = this.ownerDocument.createElement('div');
     navbarContainer.id = 'navbar-container';
     navbarContainer.appendChild(this.navbar);
-    navbarContainer.appendChild(menuButton);
+    
     this.shadowRoot?.appendChild(navbarContainer);
 
     
@@ -106,7 +106,7 @@ class Dashboard extends HTMLElement {
     this.cardsContainer.className = 'cards-container';
     this.shadowRoot?.appendChild(this.cardsContainer);
 
-    this.renderCharacters(users);
+  
 
     
 
@@ -115,13 +115,6 @@ class Dashboard extends HTMLElement {
     searchContainer.id = 'search-container';
     searchContainer.appendChild(this.searchBar);
     this.shadowRoot?.appendChild(searchContainer);
-  }
-
-  renderCharacters(data: any[]) {
-    const cardsContainer = this.ownerDocument.createElement('div');
-    cardsContainer.className = 'cards-container';
-
-   
 
     appState.posts.forEach((post:any) => {
       const card = new Card();
@@ -132,10 +125,11 @@ class Dashboard extends HTMLElement {
       this.cardsContainer.appendChild(card);
     });
 
-    
 
-    this.shadowRoot?.appendChild(cardsContainer);
+    
   }
+
+ 
 }
 
 customElements.define('app-dashboard', Dashboard);

@@ -7,7 +7,7 @@ import { getPostsAction } from '../../store/actions';
 
 export enum Attr {
   'userName' = 'userName',
-  'uid'= 'uid',
+  'id'= 'id',
   'image'= 'image',
   'description'= 'description',
   'email'= 'email',
@@ -36,7 +36,7 @@ class Card extends HTMLElement {
 
   static get observedAttributes(){
     const attrs: Record<Attr,null> = {
-      uid: null,
+      id: null,
       userName: null,
       image: null,
       description: null,
@@ -49,7 +49,7 @@ class Card extends HTMLElement {
 
     attributeChangedCallback(propName: Attr, oldVal: string | undefined, newVal:string | undefined) {
       switch (propName) {
-        case Attr.uid:
+        case Attr.id:
             this.uid = newVal ? Number(newVal): undefined;
           break;
       
@@ -60,15 +60,7 @@ class Card extends HTMLElement {
       this.render();
     }
     
-    async connectedCallback(){
-      if(appState.posts.length === 0){
-        const action = await getPostsAction();
-        dispatch(action);
-      }else{
-        this.render();
-      }
-    }
-
+    
    
 
     
@@ -160,16 +152,20 @@ class Card extends HTMLElement {
         
         buttonImage.addEventListener('click', () => {
           // Crear una instancia de Popup
-          const popup = new Popup();
+          appState.posts.forEach((post:any) => {
+            const popUp = new Popup();
+            popUp.setAttribute(Attr.image, post.image)
+            popUp.setAttribute(Attr.userName, post.userName)
+            popUp.setAttribute(Attr.description, post.description)
+            popUp.className = 'card';
+           ;
+          
       
-          // Asignar propiedades al pop-up
-          popup.userName = this.userName;
-          popup.image = this.image;
-          popup.email = this.email;
       
           // Agregar el pop-up al body del documento
-          document.body.appendChild(popup);
-      });
+          document.body.appendChild(popUp);
+      })}
+    );
           
         
         const hidePopUp = () => {
