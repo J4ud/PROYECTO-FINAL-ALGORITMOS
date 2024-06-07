@@ -1,7 +1,10 @@
 import { reducer } from "./reducer";
 import { Screens } from "../types/navigation";
 
+const emptyState  = {
 
+  
+}
 export let appState = {
     screen: Screens.SINGUP,
     posts: []
