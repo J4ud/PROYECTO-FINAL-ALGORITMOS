@@ -85,7 +85,7 @@ class SignUpForm extends HTMLElement {
             h2 {
                 text-align: center;
             }
-            input[type="text"], input[type="email"], input[type="password"], input[type="date"] {
+            input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="files"] {
                 width: calc(100% - 20px);
                 padding: 10px;
                 margin: 10px 0;
@@ -142,6 +142,14 @@ class SignUpForm extends HTMLElement {
         dobInput.type = 'date';
         dobInput.addEventListener("change", this.changeDoB);
 
+        const imginput  = document.createElement('input');
+        imginput.type = 'file';
+        imginput.addEventListener("change", () =>{
+            console.log(imginput.files)
+            const file = imginput.files
+        });
+        
+
         const signUpButton = document.createElement('button');
         signUpButton.id = 'suButton';
         signUpButton.type = 'submit';
@@ -156,6 +164,7 @@ class SignUpForm extends HTMLElement {
         container.appendChild(emailInput);
         container.appendChild(passwordInput);
         container.appendChild(dobInput);
+        container.appendChild(imginput);
         container.appendChild(signUpButton);
 
         this.shadowRoot?.appendChild(style);

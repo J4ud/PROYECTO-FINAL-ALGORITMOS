@@ -61,25 +61,23 @@ createUserWithEmailAndPassword(auth, formData.email, formData.password)
     // ..
   });
 }
-export const login = (formData:any) => {
-signInWithEmailAndPassword(auth, formData.email, formData.password)
-  .then( async (userCredential) => {   
+export const login = (formData: any) => {
+  return signInWithEmailAndPassword(auth, formData.email, formData.password)
+    .then(async (userCredential) => {
+      const user = userCredential.user;
+      console.log(user.uid);
+      console.log('Sesión iniciada');
+      return user;
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorCode, errorMessage);
+      throw error;
+    });
+};
 
-    //Obtener Id
-    const user = userCredential.user;
-    console.log(user.uid);
-    console.log('Sesión iniciada')
 
-
-    
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode,errorMessage)
-    // ..
-  });
-}
 
 export const addPost = async (formData: Omit<Post,'id'>) =>{
 

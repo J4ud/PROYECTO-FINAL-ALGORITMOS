@@ -5,166 +5,203 @@ import { Screens } from "../../types/navigation";
 
 // Definir una interfaz para el usuario
 interface User {
-    name: string;
-    lastName: string;
-    email: string;
-    password: string;
-    dob: string;  // Asume que la fecha de nacimiento también se almacena como string
+  name: string;
+  lastName: string;
+  email: string;
+  password: string;
+  dob: string;  // Asume que la fecha de nacimiento también se almacena como string
 }
 
 const formData = {
-    name: '',
-    lastName: '',
-    userName: '',
-    email: '',
-    password: '',
-    doB: null
-}
+  name: '',
+  lastName: '',
+  userName: '',
+  email: '',
+  password: '',
+  doB: null
+};
 
 class LoginForm extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
+
+  connectedCallback() {
+    this.render();
+
+    const emailInput = this.shadowRoot?.querySelector('input[type="email"]');
+    const passwordInput = this.shadowRoot?.querySelector('input[type="password"]');
+    const loginButton = this.shadowRoot?.querySelector('#logButton');
+    const signUpButton = this.shadowRoot?.querySelector('#SgButton');
+    
+    emailInput?.addEventListener('input', this.changeEmail.bind(this));
+    passwordInput?.addEventListener('input', this.changePassword.bind(this));
+    loginButton?.addEventListener('click', this.submitForm.bind(this));
+    signUpButton?.addEventListener('click', this.goToSignUp.bind(this));
+  }
+
+  changeEmail(e: Event) {
+    const target = e.target as HTMLInputElement;
+    formData.email = target.value;
+  }
+
+  changePassword(e: Event) {
+    const target = e.target as HTMLInputElement;
+    formData.password = target.value;
+  }
+
+  async submitForm(event: Event) {
+    event.preventDefault();
+    try {
+      const user = await login(formData) as any;
+      if (user) {
+        console.log('User logged in:', user);
+        dispatch(ChangeScreen(Screens.DASHBOARD)); // Dispatch a la acción de completar el registro
+      } else {
+        this.showError('Invalid email or password');
+      }
+    } catch (error) {
+      console.error('Error logging user:', error);
+      this.showError('Error logging user');
     }
+  }
 
-    connectedCallback() {
-        this.render();
+  goToSignUp(event: Event) {
+    event.preventDefault();
+    dispatch(ChangeScreen(Screens.SINGUP));
+  }
 
-        const emailInput = this.shadowRoot?.querySelector('input[type="email"]');
-        const passwordInput = this.shadowRoot?.querySelector('input[type="password"]');
-        const loginButton = this.shadowRoot?.querySelector('#logButton');
-
-        emailInput?.addEventListener('input', this.changeEmail.bind(this));
-        passwordInput?.addEventListener('input', this.changePassword.bind(this));
-        loginButton?.addEventListener('click', this.submitForm.bind(this));
+  showError(message: string) {
+    const errorDiv = this.shadowRoot?.querySelector('.error-message');
+    if (errorDiv) {
+      errorDiv.textContent = message;
+      errorDiv.classList.add('visible');
+    } else {
+      const newErrorDiv = this.ownerDocument.createElement('div');
+      newErrorDiv.className = 'error-message visible';
+      newErrorDiv.textContent = message;
+      const loginContainer = this.shadowRoot?.querySelector('.login-container');
+      loginContainer?.appendChild(newErrorDiv);
     }
+  }
 
-    changeEmail(e: Event) {
-        const target = e.target as HTMLInputElement;
-        formData.email = target.value;
-    }
+  render() {
+    const style = document.createElement('style');
+    style.textContent = `
+      :host {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #000;
+      }
 
-    changePassword(e: Event) {
-        const target = e.target as HTMLInputElement;
-        formData.password = target.value;
-    }
+      .login-container {
+        padding: 20px;
+        background-color: #1E1E1E;
+        width: 300px;
+        border-radius: 0px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        justify-content: center;
+        position: relative;
+      }
 
-    async submitForm(event: Event) {
-        event.preventDefault();
-        try {
-            const user = await login(formData);
-            console.log('User logged in:', user);
-            dispatch(ChangeScreen(Screens.DASHBOARD)); // Dispatch a la acción de completar el registro
-        } catch (error) {
-            console.error('Error logging user:', error);
-        }
-    }
+      h2 {
+        text-align: center;
+        color: white;
+        font-family: "Josefin Sans", sans-serif;
+      }
 
-    render() {
-        const style = document.createElement('style');
-        style.textContent = `
-            :host {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                width: 100vw;
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-                font-family: Arial, sans-serif;
-                background-color: #000;
-            }
+      input[type="email"], input[type="password"] {
+        width: 93%;
+        padding: 10px;
+        margin: 8px 0;
+        display: block;
+        border: none;
+        border-radius: 50px;
+        background-color: #B2AFA7;
+        color: white;
+        font-family: "Josefin Sans", sans-serif;
+      }
 
-            .login-container {
-                padding: 20px;
-                background-color: #1E1E1E;
-                width: 300px;
-                border-radius: 0px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.5);
-                justify-content: center;
-            }
+      button {
+        width: 48%;
+        padding: 10px;
+        margin-top: 10px;
+        margin-right: 4%;
+        border: none;
+        border-radius: 50px;
+        background-color: #EBE7DC;
+        color: #1E1E1E;
+        cursor: pointer;
+        float: left;
+        font-family: "Josefin Sans", sans-serif;
+      }
 
-            h2 {
-                text-align: center;
-                color: white;
-                font-family: "Josefin Sans", sans-serif;
-            }
+      button:hover {
+        background-color: #0A58CA;
+      }
 
-            input[type="email"], input[type="password"] {
-                width: 93%;
-                padding: 10px;
-                margin: 8px 0;
-                display: block;
-                border: none;
-                border-radius: 50px;
-                background-color: #B2AFA7;
-                color: white;
-                font-family: "Josefin Sans", sans-serif;
-            }
+      button:last-of-type {
+        margin-right: 0;
+      }
 
-            button {
-                width: 48%;
-                padding: 10px;
-                margin-top: 10px;
-                margin-right: 4%;
-                border: none;
-                border-radius: 50px;
-                background-color: #EBE7DC;
-                color: #1E1E1E;
-                cursor: pointer;
-                float: left;
-                font-family: "Josefin Sans", sans-serif;
-            }
+      .clear {
+        clear: both;
+      }
 
-            button:hover {
-                background-color: #0A58CA;
-            }
+      .error-message {
+        color: red;
+        margin-top: 10px;
+        display: none;
+      }
 
-            button:last-of-type {
-                margin-right: 0;
-            }
+      .error-message.visible {
+        display: block;
+      }
+    `;
 
-            .clear {
-                clear: both;
-            }
-        `;
+    const loginContainer = this.ownerDocument.createElement('div');
+    loginContainer.className = 'login-container';
 
-        const loginContainer = this.ownerDocument.createElement('div');
-        loginContainer.className = 'login-container';
+    const loginTitle = this.ownerDocument.createElement('h2');
+    loginTitle.innerText = 'LOG IN';
 
-        const loginTitle = this.ownerDocument.createElement('h2');
-        loginTitle.innerText = 'LOG IN';
+    const emailInput = this.ownerDocument.createElement('input');
+    emailInput.type = 'email';
+    emailInput.placeholder = 'Email';
 
-        const emailInput = this.ownerDocument.createElement('input');
-        emailInput.type = 'email';
-        emailInput.placeholder = 'Email';
+    const passwordInput = this.ownerDocument.createElement('input');
+    passwordInput.type = 'password';
+    passwordInput.placeholder = 'Password';
 
-        const passwordInput = this.ownerDocument.createElement('input');
-        passwordInput.type = 'password';
-        passwordInput.placeholder = 'Password';
+    const loginButton = this.ownerDocument.createElement('button');
+    loginButton.id = 'logButton';
+    loginButton.innerText = 'Log In';
 
-        const loginButton = this.ownerDocument.createElement('button');
-        loginButton.id = 'logButton';
-        loginButton.innerText = 'Log In';
+    const signUpButton = this.ownerDocument.createElement('button');
+    signUpButton.id = 'SgButton';
+    signUpButton.innerText = 'Sign Up';
 
-        const signUpButton = this.ownerDocument.createElement('button');
-        signUpButton.id = 'SgButton';
-        signUpButton.innerText = 'Sign Up';
+    const clearDiv = this.ownerDocument.createElement('div');
+    clearDiv.className = 'clear';
 
-        const clearDiv = this.ownerDocument.createElement('div');
-        clearDiv.className = 'clear';
+    loginContainer.appendChild(loginTitle);
+    loginContainer.appendChild(emailInput);
+    loginContainer.appendChild(passwordInput);
+    loginContainer.appendChild(loginButton);
+    loginContainer.appendChild(signUpButton);
+    loginContainer.appendChild(clearDiv);
 
-        loginContainer.appendChild(loginTitle);
-        loginContainer.appendChild(emailInput);
-        loginContainer.appendChild(passwordInput);
-        loginContainer.appendChild(loginButton);
-        loginContainer.appendChild(signUpButton);
-        loginContainer.appendChild(clearDiv);
-
-        this.shadowRoot!.appendChild(style);
-        this.shadowRoot!.appendChild(loginContainer);
-    }
+    this.shadowRoot!.appendChild(style);
+    this.shadowRoot!.appendChild(loginContainer);
+  }
 }
 
 customElements.define('login-form', LoginForm);
