@@ -41,7 +41,7 @@ class AppContainer extends HTMLElement {
           break;
 
             case 'forum':
-          const forum = this.ownerDocument.createElement('app-forum');
+          const forum = this.ownerDocument.createElement('app-foros');
           this.shadowRoot?.appendChild(forum)
           break;
 
