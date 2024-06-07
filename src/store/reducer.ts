@@ -13,7 +13,7 @@ export const reducer = (currentAction:any, currentState:any) => {
             break;
 
         case 'GETPOSTS':
-                currentState.screen =payload;
+                currentState.posts =payload;
             break;
     }
     return currentState;
