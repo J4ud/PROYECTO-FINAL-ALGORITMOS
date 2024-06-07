@@ -94,11 +94,18 @@ class SidebarMenu extends HTMLElement {
       console.log("Profile button clicked");
       dispatch(ChangeScreen('profile'));
     });
+    this.shadowRoot?.querySelector('#main')?.addEventListener('click', () => {
+      dispatch(ChangeScreen('dashboard'));
+    });
     this.shadowRoot?.querySelector('#menu')?.addEventListener('click', () => {
       dispatch(ChangeScreen('login'));
     });
     this.shadowRoot?.querySelector('#forum')?.addEventListener('click', () => {
       dispatch(ChangeScreen('forum'));
+    });
+
+    this.shadowRoot?.querySelector('#discover')?.addEventListener('click', () => {
+      dispatch(ChangeScreen('discover'));
     });
   }
 }

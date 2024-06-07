@@ -5,6 +5,7 @@ import  "./screens/dashboard/dashboard";
 import "./screens/login/login";
 import "./screens/signUp/signUp";
 import "./screens/foros/foros";
+import "./screens/discover/discover";
 
 class AppContainer extends HTMLElement {
   constructor() {
@@ -45,9 +46,9 @@ class AppContainer extends HTMLElement {
           this.shadowRoot?.appendChild(forum)
           break;
 
-          case 'profiles':
-          const profiles = this.ownerDocument.createElement('app-profiles');
-          this.shadowRoot?.appendChild(profiles)
+          case 'discover':
+          const discover = this.ownerDocument.createElement('app-discover');
+          this.shadowRoot?.appendChild(discover)
           break;
 
 
