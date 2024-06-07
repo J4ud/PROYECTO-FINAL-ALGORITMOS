@@ -1,5 +1,5 @@
 import { ChangeScreen, signUpCompleted } from "../../store/actions";
-import { dispatch } from "../../store/store";
+import { appState, dispatch } from "../../store/store";
 import { createUser } from "../../services/firebase";
 import { Screens } from "../../types/navigation";
 
@@ -9,7 +9,8 @@ const formData = {
     userName: '',
     email: '',
     password: '',
-    doB: null
+    doB: null,
+    
 }
 
 class SignUpForm extends HTMLElement {
@@ -53,8 +54,11 @@ class SignUpForm extends HTMLElement {
     }
 
     async submitForm() {
+        
         try {
+           
             const user = await createUser(formData);
+           
             dispatch(ChangeScreen(Screens.LOGIN)); // Dispatch a la acción de completar el registro
           
         } catch (error) {

@@ -86,6 +86,16 @@ signInWithEmailAndPassword(auth, formData.email, formData.password)
   });
 }
 
+export const addPost = async (formData: Omit<Post,'id'>) =>{
+
+  // Agregar datos
+      try {
+      const docRef = await addDoc(collection(db, "posts"), formData);
+       console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+      console.error("Error adding document: ", e);
+      }
+  }
 
 export const getPosts = async () =>{
   const querySnapshot = await getDocs(collection(db, "posts"));

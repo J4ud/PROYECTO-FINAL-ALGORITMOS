@@ -1,18 +1,21 @@
 import { ChangeScreen, signUpCompleted } from "../../store/actions";
-import { dispatch } from "../../store/store";
-import { createUser } from "../../services/firebase";
+import { appState, dispatch } from "../../store/store";
+import { addPost, createUser } from "../../services/firebase";
 import { Screens } from "../../types/navigation";
 
 const formData = {
+    image: '',
+    description: '',
     name: '',
     lastName: '',
     userName: '',
     email: '',
     password: '',
-    doB: null
+    doB: null,
+    userId: ''
 }
 
-class addPost extends HTMLElement {
+class formPost extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -21,53 +24,35 @@ class addPost extends HTMLElement {
 
     connectedCallback() {
         this.render
-            this.submitForm();
+    
         
     }
 
-    changeEmail(e: any) {
+  
+
+    changeImage(e: any) {
         console.log(e.target.value)
-        formData.email = e?.target?.value
+        formData.image = e?.target?.value
+    }
+    changeDescription(e: any) {
+        console.log(e.target.value)
+        formData.description = e?.target?.value
     }
 
-    changeName(e: any) {
-        console.log(e.target.value)
-        formData.name = e?.target?.value
-    }
-    changePassword(e: any) {
-        console.log(e.target.value)
-        formData.password = e?.target?.value
-    }
-    changeDoB(e: any) {
-        console.log(e.target.value)
-        formData.doB = e?.target?.value
-    }
-    changeLastname(e: any) {
-        console.log(e.target.value)
-        formData.lastName = e?.target?.value
-    }
-    changeUsername(e: any) {
-        console.log(e.target.value)
-        formData.userName = e?.target?.value
-    }
-
-    async submitForm() {
-        try {
-            const user = await createUser(formData);
-            dispatch(ChangeScreen(Screens.LOGIN)); // Dispatch a la acción de completar el registro
-          
-        } catch (error) {
-            console.error('Error creating user:', error);
-        }
+    submitForm() {
+        formData.userId = appState.user
+        addPost(formData);
+           
     }
 
    
 
-    render() {
+    async render() {
         const style = document.createElement('style');
         style.textContent = `
             :host {
                 display: block;
+                position: fixed;
                 margin: auto;
                 padding: 20px;
                 background-color: #1E1E1E;
@@ -76,23 +61,34 @@ class addPost extends HTMLElement {
                 width: 300px;
                 border-radius: 10px;
                 box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+                z-index: 9999;
     }
         `;
 
         const container = document.createElement('div');
 
-        const addButton = document.createElement('button')
+        const addButton = document.createElement('input')
+        addButton.placeholder = 'Link de imagen';
+        addButton.addEventListener("change", this.changeImage);
 
-        const addInput = document.createElement('input')
-        addInput.type = 'text';
-        addInput.placeholder = 'Description';
+        const descriptionInput = document.createElement('input')
+        descriptionInput.type = 'text';
+        descriptionInput.placeholder = 'Description';
+        descriptionInput.addEventListener("change", this.changeDescription);
        
+        const submitButton = document.createElement('button')
+        submitButton.type = 'submit';
+        submitButton.innerText = 'Submit';
+        submitButton.addEventListener("click", this.submitForm);
         
+        container.appendChild(addButton);
+        container.appendChild(descriptionInput);
+        container.appendChild(submitButton);
 
         this.shadowRoot?.appendChild(style);
         this.shadowRoot?.appendChild(container);
     }
 }
 
-customElements.define('add-post', addPost);
-export default addPost;
+customElements.define('add-post', formPost);
+export default formPost;

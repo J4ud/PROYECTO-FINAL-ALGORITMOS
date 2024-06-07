@@ -24,12 +24,12 @@ class UserProfile extends HTMLElement {
     
         // Crear e instanciar correctamente los componentes
         this.navbar = new Navbar();
-        this.Menubutton = new MenuButton();
+       
         this.SidebarMenu = new SidebarMenu();
     
         // Añadir al shadow DOM
         this.shadowRoot?.appendChild(this.navbar);
-        this.shadowRoot?.appendChild(this.Menubutton);
+     
         this.shadowRoot?.appendChild(this.SidebarMenu);
     }
     
@@ -125,13 +125,16 @@ class UserProfile extends HTMLElement {
             </div>
         `;
 
-        const menuButton = document.createElement('menu-button');
+       
     const sidebarMenu = document.createElement('sidebar-menu');
     const navbarContainer = this.ownerDocument.createElement('div');
     navbarContainer.id = 'navbar-container';
     navbarContainer.appendChild(this.navbar);
-    navbarContainer.appendChild(menuButton);
+    
     this.shadowRoot?.appendChild(navbarContainer);
+    const postForm = this.ownerDocument.createElement('add-post')
+    postForm.className = 'post-form'
+    this.shadowRoot?.appendChild(postForm);
     }
 }
 

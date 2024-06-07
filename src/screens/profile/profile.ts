@@ -35,8 +35,7 @@ class Profile extends HTMLElement {
 
     `;
     
-    
-  
+   
 
   }
 

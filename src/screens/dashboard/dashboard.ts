@@ -88,6 +88,9 @@ class Dashboard extends HTMLElement {
             margin-top: 120px;
           }
         }
+          .post-form{
+          position: fixed;
+          }
       `;
 
       // Limpiar el shadowRoot existente antes de agregar nuevos elementos
@@ -95,9 +98,11 @@ class Dashboard extends HTMLElement {
 
       const sidebarMenu = document.createElement('sidebar-menu');
       const navbarContainer = this.ownerDocument.createElement('div');
+      
       navbarContainer.id = 'navbar-container';
       navbarContainer.appendChild(this.navbar);
 
+      
       this.shadowRoot.appendChild(navbarContainer);
       this.shadowRoot.appendChild(css);
       this.shadowRoot.appendChild(this.cardsContainer);
