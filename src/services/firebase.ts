@@ -34,21 +34,21 @@ createUserWithEmailAndPassword(auth, formData.email, formData.password)
 
     //Obtener Id
     const user = userCredential.user;
-    console.log(user);
+    console.log(user.uid);
     
     //Agregar documento bajo ese ID
     try {
-      const where = doc(db, 'users', user.uid);
+      const where = collection(db, 'usuarios');
       const data = {
-        age: formData.age,
+        bod: formData.doB,
         name: formData.name,
         lastName: formData.lastName,
         userName: formData.userName
       }
-      await setDoc(where,data);
+      await addDoc(where, data);
       alert ('Se creo el usuario')
     } catch (error) {
-      
+      console.log(error)
     }
 
 

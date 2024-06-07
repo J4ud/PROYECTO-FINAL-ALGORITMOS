@@ -54,7 +54,6 @@ class SignUpForm extends HTMLElement {
     async submitForm() {
         try {
             const user = await CreateUser(formData);
-            this.saveUser(user);
             dispatch(ChangeScreen('login')); // Dispatch a la acción de completar el registro
           
         } catch (error) {
@@ -62,11 +61,7 @@ class SignUpForm extends HTMLElement {
         }
     }
 
-    saveUser(user: any) {
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-        users.push(user);
-        localStorage.setItem('users', JSON.stringify(users));
-    }
+   
 
     render() {
         const style = document.createElement('style');
@@ -118,6 +113,11 @@ class SignUpForm extends HTMLElement {
         nameInput.placeholder = 'Name';
         nameInput.addEventListener("change", this.changeName);
 
+        const usernameInput = document.createElement('input');
+        usernameInput.type = 'text';
+        usernameInput.placeholder = 'Usersame';
+        usernameInput.addEventListener("change", this.changeUsername);
+
         const lastNameInput = document.createElement('input');
         lastNameInput.type = 'text';
         lastNameInput.placeholder = 'Last Name';
@@ -143,6 +143,7 @@ class SignUpForm extends HTMLElement {
         signUpButton.innerText = 'Sign Up';
         signUpButton.addEventListener("click", this.submitForm);
 
+        container.appendChild(usernameInput);
         container.appendChild(title);
         container.appendChild(nameInput);
         container.appendChild(lastNameInput);
