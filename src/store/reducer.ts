@@ -11,6 +11,10 @@ export const reducer = (currentAction:any, currentState:any) => {
         case 'signUpCompleted':
                 currentState.screen =payload;
             break;
+
+        case 'GETPOSTS':
+                currentState.screen =payload;
+            break;
     }
     return currentState;
 }
