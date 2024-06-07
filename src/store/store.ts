@@ -1,7 +1,9 @@
 import { reducer } from "./reducer";
+import { Screens } from "../types/navigation";
+
 
 export let appState = {
-    screen: 'signUp',
+    screen: Screens.SINGUP,
   };
 
   let observers: any[] = [];
