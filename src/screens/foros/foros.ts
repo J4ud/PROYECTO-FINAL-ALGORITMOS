@@ -14,24 +14,23 @@ class Foros extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         addObserver(this);
 
-        // Instancia los componentes necesarios
+      
         this.navbar = new Navbar();
         this.SidebarMenu = new SidebarMenu();
         this.Menubutton = new MenuButton();
         
-        // Llama a render para inicializar el contenido
+      
         this.render();
     }
 
     render() {
-        // Limpia el contenido del shadowRoot antes de renderizar
+       
         if (this.shadowRoot) {
             this.shadowRoot.innerHTML = '';
         }
 
         console.log(appState);
 
-        // Crear y aplicar el estilo
         const css = this.ownerDocument.createElement('style');
         css.textContent = `
       
@@ -44,13 +43,12 @@ class Foros extends HTMLElement {
         this.shadowRoot?.appendChild(this.navbar);
         //this.shadowRoot?.appendChild(menuButton);
 
-        // Crear y añadir el contenedor de búsqueda
    
 
-        // Añadir el contenedor de la barra lateral al shadow DOM
+     
         this.shadowRoot?.appendChild(sidebarMenu);
 
-        // Añadir el estilo al shadow DOM
+       
         this.shadowRoot?.appendChild(css);
     }
 
