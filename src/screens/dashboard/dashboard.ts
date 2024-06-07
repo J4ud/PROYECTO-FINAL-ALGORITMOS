@@ -7,6 +7,7 @@ import { MenuButton } from '../../components/index';
 import {SidebarMenu} from '../../components/index';;  // Asegúrate de que 'Menu/menu' es el archivo correcto para 'SidebarMenu'.
 import { appState, addObserver, dispatch } from '../../store/store';
 import { getPostsAction } from '../../store/actions';
+import Popup from '../../components/PopUp/PopUp';
 
 
 
@@ -130,6 +131,8 @@ class Dashboard extends HTMLElement {
       card.className = 'card';
       this.cardsContainer.appendChild(card);
     });
+
+    
 
     this.shadowRoot?.appendChild(cardsContainer);
   }

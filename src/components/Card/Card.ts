@@ -2,6 +2,8 @@
 import './Card.css';
 import Popup from '../PopUp/PopUp';
 import styles from '../PopUp/Popup.css'
+import { appState, addObserver, dispatch } from '../../store/store';
+import { getPostsAction } from '../../store/actions';
 
 export enum Attr {
   'userName' = 'userName',
@@ -57,7 +59,15 @@ class Card extends HTMLElement {
       }
       this.render();
     }
-
+    
+    async connectedCallback(){
+      if(appState.posts.length === 0){
+        const action = await getPostsAction();
+        dispatch(action);
+      }else{
+        this.render();
+      }
+    }
 
    
 
@@ -183,13 +193,8 @@ class Card extends HTMLElement {
     }
   
   
-  connectedCallback() {
-    this.render();
     
-  }
-  disconnectedCallback() {
-    
-  }
+ 
  
 
 }
