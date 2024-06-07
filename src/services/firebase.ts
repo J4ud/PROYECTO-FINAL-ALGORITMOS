@@ -1,7 +1,7 @@
 
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs, setDoc, doc } from "firebase/firestore"; 
+import { getFirestore, query } from "firebase/firestore";
+import { collection, addDoc, getDocs, setDoc, doc, where } from "firebase/firestore"; 
 import { SignUpForm } from "../components";
 import { Post } from "../types/post";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
@@ -70,10 +70,6 @@ signInWithEmailAndPassword(auth, formData.email, formData.password)
     //Obtener Id
     const user = userCredential.user;
     console.log(user.uid);
-    
-    
-
-
 
 
     
@@ -99,6 +95,20 @@ export const addPost = async (formData: Omit<Post,'id'>) =>{
 
 export const getPosts = async () =>{
   const querySnapshot = await getDocs(collection(db, "posts"));
+  const arrayProducts: Array<Post> = [];
+
+  querySnapshot.forEach((doc) => {
+     const data = doc.data() as any;
+     arrayProducts.push({ id: doc.id, ...data});
+  });
+
+  return arrayProducts
+  }
+
+
+export const getPostsProfile = async (idUser: string) =>{
+  const q = query(collection(db, "posts"), where("idUser","==",idUser));
+  const querySnapshot = await getDocs(q);
   const arrayProducts: Array<Post> = [];
 
   querySnapshot.forEach((doc) => {

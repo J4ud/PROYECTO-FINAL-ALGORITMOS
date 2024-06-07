@@ -18,6 +18,7 @@ const emptyState  = {
   screen: Screens.LOGIN,
   posts: [],
   user: '', 
+  postsProfile: []
 
 }
 export let appState = emptyState;

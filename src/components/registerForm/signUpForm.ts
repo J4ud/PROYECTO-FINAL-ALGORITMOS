@@ -23,7 +23,7 @@ class SignUpForm extends HTMLElement {
     connectedCallback() {
         this.shadowRoot?.querySelector('#suButton')?.addEventListener('click', (event) => {
             event.preventDefault();  // Previene la recarga de la página
-            this.submitForm();
+            
         });
     }
 

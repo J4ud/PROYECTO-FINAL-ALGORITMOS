@@ -4,6 +4,7 @@ import { addObserver } from "./store/store";
 import  "./screens/dashboard/dashboard";
 import "./screens/login/login";
 import './screens/signUp/signUp'
+import './screens/profile/profile'
 import { Screens } from "./types/navigation";
 class AppContainer extends HTMLElement {
   constructor() {

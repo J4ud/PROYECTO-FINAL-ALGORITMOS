@@ -1,4 +1,4 @@
-import { getPosts } from "../services/firebase"
+import { getPosts, getPostsProfile } from "../services/firebase"
 import { Screens } from "../types/navigation"
 
 export const ChangeScreen = (screen:Screens) => {
@@ -17,6 +17,14 @@ export const getPostsAction = async () => {
     return{
         action: 'GETPOSTS',
         payload: posts
+    }
+}
+
+export const getPostsProfileAction = async (idUser: string) => {
+    const postsProfile = await getPostsProfile(idUser);
+    return{
+        action: 'GETPOSTSPROFILE',
+        payload: postsProfile
     }
 }
 

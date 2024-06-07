@@ -32,9 +32,7 @@ class LoginForm extends HTMLElement {
             event.preventDefault(); // Previene el comportamiento por defecto del formulario
             
         });
-        this.shadowRoot?.querySelector('#SgButton')?.addEventListener('click', () => {
-            dispatch(ChangeScreen(Screens.SINGUP)); // Cambia el estado a 'signUp'
-        });
+      
     }
 
     changeEmail(e: any) {
@@ -49,7 +47,17 @@ class LoginForm extends HTMLElement {
 
     async submitForm() {
         login(formData);
-    }
+            try {
+               
+                const user = await login(formData);
+               
+                dispatch(ChangeScreen(Screens.DASHBOARD)); // Dispatch a la acción de completar el registro
+                
+            } catch (error) {
+                console.error('Error logging user:', error);
+            }
+        }
+    
 
     render() {
         const style = document.createElement('style');
@@ -138,6 +146,7 @@ class LoginForm extends HTMLElement {
         const loginButton = this.ownerDocument.createElement('button');
         loginButton.id = 'logButton';
         loginButton.innerText = 'Log In';
+        loginButton.addEventListener("click", this.submitForm);
 
         const signUpButton = this.ownerDocument.createElement('button');
         signUpButton.id = 'SgButton';

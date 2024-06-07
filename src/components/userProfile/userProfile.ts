@@ -126,17 +126,11 @@ class UserProfile extends HTMLElement {
         `;
 
        
-    const sidebarMenu = document.createElement('sidebar-menu');
-    const navbarContainer = this.ownerDocument.createElement('div');
-    navbarContainer.id = 'navbar-container';
-    navbarContainer.appendChild(this.navbar);
+   
+    ;
     
-    this.shadowRoot?.appendChild(navbarContainer);
-    const postForm = this.ownerDocument.createElement('add-post')
-    postForm.className = 'post-form'
-    this.shadowRoot?.appendChild(postForm);
     }
 }
 
-customElements.define('app-profile', UserProfile);
+customElements.define('user-profile', UserProfile);
 export default UserProfile;

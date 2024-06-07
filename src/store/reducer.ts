@@ -14,6 +14,9 @@ export const reducer = (currentAction:any, currentState:any) => {
         case 'GETPOSTS':
                 currentState.posts =payload;
             break;
+        case 'GETPOSTSPROFILE':
+                currentState.postsProfile =payload;
+            break;
 
         case 'SETUSER':
                 currentState.user =payload;

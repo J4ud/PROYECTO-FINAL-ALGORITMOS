@@ -1,15 +1,18 @@
-import './dashboard.css';
-import { appState } from '../../store/store';
-
-
+import '../dashboard/dashboard.css';
+import { Attr } from '../../components/PopUp/PopUp';
+import { appState, addObserver, dispatch } from '../../store/store';
+import  { getPostsAction, getPostsProfileAction } from '../../store/actions';
 import  MenuButton  from '../../components/MenuButton/MenuButton';
 import SidebarMenu from '../../components/Menu/menu'
-import { addObserver } from '../../store/store';
+import UserProfile from '../../components/userProfile/userProfile';
 import Navbar from '../../components/navbar/navbar';
+import { postsProfile } from '../../components';
+import '../../components/index'
 class Profile extends HTMLElement {
   navbar: Navbar;
   Menubutton: MenuButton;
   SidebarMenu: SidebarMenu;
+  userprofile: UserProfile;
 
   constructor() {
     super();
@@ -20,10 +23,20 @@ class Profile extends HTMLElement {
     this.navbar = new Navbar();
     this.SidebarMenu = new SidebarMenu();
     this.Menubutton = new MenuButton();
+    this.userprofile = new UserProfile();
 
     this.render();
 
    
+  }
+
+  async connectedCallback() {
+    if (appState.postsProfile.length === 0) {
+      const action = await getPostsProfileAction(appState.user);
+      dispatch(action);
+    } else {
+      this.render();
+    }
   }
 
   render() {
@@ -34,7 +47,21 @@ class Profile extends HTMLElement {
       
 
     `;
-    
+    const userProfile = document.createElement('user-profile')
+    this.shadowRoot?.appendChild(userProfile)
+
+    const cardsContainer = document.createElement('div')
+    cardsContainer.className = 'cards-container'
+        
+    appState.postsProfile.forEach((post: any) => {
+      const card = new postsProfile();
+      card.setAttribute(Attr.image, post.image);
+      card.setAttribute(Attr.userName, post.userName);
+      card.setAttribute(Attr.description, post.description);
+      card.className = 'card';
+      cardsContainer.appendChild(card);
+      this.shadowRoot?.appendChild(cardsContainer);
+    });
    
 
   }
