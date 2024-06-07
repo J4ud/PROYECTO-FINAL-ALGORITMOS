@@ -1,36 +1,36 @@
-import { AddCards } from '../../types/index';
-import { getmensajes } from '../../services/indexs';
+// import { AddCards } from '../../types/index';
+// import { getmensajes } from '../../services/indexs';
 
-const FormData: Omit<AddCards, 'id'> = {
-   
-   message: '',
-   
-};
+// const FormData: Omit<AddCards, 'id'> = {
 
-class ForosCard extends HTMLElement {
-   constructor() {
-       super();
-       this.attachShadow({ mode: 'open' });
-   }
+//    message: '',
 
-   connectedCallback() {
-       this.render();
-   }
+// };
 
-   async render() {
-       const songs = await getmensajes();
-       songs.forEach((p: AddCards) => {
-           const container = this.ownerDocument.createElement('section');
-           
+// class ForosCard extends HTMLElement {
+//    constructor() {
+//        super();
+//        this.attachShadow({ mode: 'open' });
+//    }
 
-           const message = this.ownerDocument.createElement('p');
-           message.innerText =p.message;
-           container.appendChild(message);
+//    connectedCallback() {
+//        this.render();
+//    }
 
-           this.shadowRoot?.appendChild(container);
-       });
-   }
-}  
+//    async render() {
+//        const songs = await getmensajes();
+//        songs.forEach((p: AddCards) => {
+//            const container = this.ownerDocument.createElement('section');
+
+
+//            const message = this.ownerDocument.createElement('p');
+//            message.innerText =p.message;
+//            container.appendChild(message);
+
+//            this.shadowRoot?.appendChild(container);
+//        });
+//    }
+// }
 
 
 // const mensajes = await getmensajes();
@@ -40,5 +40,5 @@ class ForosCard extends HTMLElement {
 //       		name.innerText = p.message;
 //       		container.appendChild(name);
 
-customElements.define('custom-songs', ForosCard);
-export default ForosCard;
+// customElements.define('custom-songs', ForosCard);
+// export default ForosCard;

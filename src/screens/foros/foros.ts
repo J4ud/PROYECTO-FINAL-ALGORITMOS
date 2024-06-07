@@ -4,12 +4,15 @@ import { SidebarMenu } from '../../components/index';
 import { appState } from '../../store/store';
 import { addObserver } from '../../store/store';
 import Foro from '../../components/forosinput/forosinput';
-import ForosCard  from '../../components/foroscard/foroscard';
+import './foros.css';
+//import ForosCard  from '../../components/foroscard/foroscard';
 
 class Foros extends HTMLElement {
     navbar: Navbar;
     Menubutton: MenuButton;
     SidebarMenu: SidebarMenu;
+    //ForosCard: ForosCard;
+    Foro: Foro;
 
     constructor() {
         super();
@@ -20,6 +23,8 @@ class Foros extends HTMLElement {
         this.navbar = new Navbar();
         this.SidebarMenu = new SidebarMenu();
         this.Menubutton = new MenuButton();
+        //this.ForosCard = new ForosCard();
+        this.Foro = new Foro();
         
       
         this.render();
@@ -35,17 +40,19 @@ class Foros extends HTMLElement {
 
         const css = this.ownerDocument.createElement('style');
         css.textContent = `
-      
+         
         `;
-        const foroscard = this.ownerDocument.createElement('custom-card') as Foro;
-
-        const sidebarMenu = document.createElement('sidebar-menu');
         
+        const sidebarMenu = document.createElement('sidebar-menu');
+        console.log('esto se ve bien');
+        const Foro = this.ownerDocument.createElement('custom-foro') as Foro;
+        console.log('esto no');
     
         this.shadowRoot?.appendChild(this.navbar);
         //this.shadowRoot?.appendChild(menuButton);
 
         this.shadowRoot?.appendChild(sidebarMenu);
+        this.shadowRoot?.appendChild(this.Foro);
        
         this.shadowRoot?.appendChild(css);
     }

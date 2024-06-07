@@ -1,6 +1,6 @@
 import { AddCards } from '../../types/index';
 import { addmensajes, getmensajes } from '../../services/indexs';
-
+import './forosinput.csscss';
 const FormData: Omit<AddCards, 'id'> = {
 	
 	message: '',
@@ -36,14 +36,14 @@ class Foro extends HTMLElement {
 			:host {
             display: block;
             font-family: 'Arial', sans-serif;
-            max-width: 90%;
-            margin: 30px;
+            max-width: 100%;
+            margin: 60px;
             padding: 20px;
             border-radius: 10px;
             background-color: #fff;
           }
           input {
-            width: 90%;
+            width: 100%;
             padding: 20px;
             border-radius: 20px 0 0 20px;
             box-sizing: border-box;
