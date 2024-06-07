@@ -7,5 +7,5 @@ export{default as MenuButton} from '../components/MenuButton/MenuButton'
 export{default as LoginForm} from '../components/loginForm/loginForm'
 export{default as SignUpForm} from '../components/registerForm/signUpForm'
 export{default as UserProfile} from '../components/userProfile/userProfile'
-//export{default as ForosInput} from  "../components/forosinput/forosinput";
+export { default as ForosCard} from './foroscard/foroscard';
 

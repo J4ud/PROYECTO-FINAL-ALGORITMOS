@@ -3,6 +3,8 @@ import { MenuButton } from '../../components/index';
 import { SidebarMenu } from '../../components/index';
 import { appState } from '../../store/store';
 import { addObserver } from '../../store/store';
+import Foro from '../../components/forosinput/forosinput';
+import ForosCard  from '../../components/foroscard/foroscard';
 
 class Foros extends HTMLElement {
     navbar: Navbar;
@@ -35,19 +37,15 @@ class Foros extends HTMLElement {
         css.textContent = `
       
         `;
+        const foroscard = this.ownerDocument.createElement('custom-card') as Foro;
 
-     
         const sidebarMenu = document.createElement('sidebar-menu');
         
     
         this.shadowRoot?.appendChild(this.navbar);
         //this.shadowRoot?.appendChild(menuButton);
 
-   
-
-     
         this.shadowRoot?.appendChild(sidebarMenu);
-
        
         this.shadowRoot?.appendChild(css);
     }
