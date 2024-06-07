@@ -26,7 +26,7 @@ class Foro extends HTMLElement {
 
   async submitForm() {
     await addmensajes(FormData);
-    this.render(); // Re-render to update the message list
+    this.render(); 
   }
 
   async render() {
