@@ -37,11 +37,10 @@ class Foros extends HTMLElement {
       
         `;
 
-        // Crear los elementos del menú
-       
+     
         const sidebarMenu = document.createElement('sidebar-menu');
         
-        // Añadir los componentes directamente al shadow DOM
+    
         this.shadowRoot?.appendChild(this.navbar);
         //this.shadowRoot?.appendChild(menuButton);
 
