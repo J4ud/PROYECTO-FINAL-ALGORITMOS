@@ -30,9 +30,25 @@ class SignUpForm extends HTMLElement {
         formData.email = e?.target?.value
     }
 
+    changeName(e: any) {
+        console.log(e.target.value)
+        formData.name = e?.target?.value
+    }
     changePassword(e: any) {
         console.log(e.target.value)
         formData.password = e?.target?.value
+    }
+    changeDoB(e: any) {
+        console.log(e.target.value)
+        formData.doB = e?.target?.value
+    }
+    changeLastname(e: any) {
+        console.log(e.target.value)
+        formData.lastName = e?.target?.value
+    }
+    changeUsername(e: any) {
+        console.log(e.target.value)
+        formData.username = e?.target?.value
     }
 
     async submitForm() {
@@ -100,29 +116,32 @@ class SignUpForm extends HTMLElement {
         const nameInput = document.createElement('input');
         nameInput.type = 'text';
         nameInput.placeholder = 'Name';
+        nameInput.addEventListener("change", this.changeName);
 
         const lastNameInput = document.createElement('input');
         lastNameInput.type = 'text';
         lastNameInput.placeholder = 'Last Name';
+        lastNameInput.addEventListener("change", this.changeLastname);
 
         const emailInput = document.createElement('input');
         emailInput.type = 'email';
         emailInput.placeholder = 'Email';
-        emailInput.addEventListener("change", this.changeEmail.bind(this));
+        emailInput.addEventListener("change", this.changeEmail);
 
         const passwordInput = document.createElement('input');
         passwordInput.type = 'password';
         passwordInput.placeholder = 'Password';
-        passwordInput.addEventListener("change", this.changePassword.bind(this));
+        passwordInput.addEventListener("change", this.changePassword);
 
         const dobInput = document.createElement('input');
         dobInput.type = 'date';
+        dobInput.addEventListener("change", this.changeDoB);
 
         const signUpButton = document.createElement('button');
         signUpButton.id = 'suButton';
         signUpButton.type = 'submit';
         signUpButton.innerText = 'Sign Up';
-        signUpButton.addEventListener("click", this.submitForm.bind(this));
+        signUpButton.addEventListener("click", this.submitForm);
 
         container.appendChild(title);
         container.appendChild(nameInput);

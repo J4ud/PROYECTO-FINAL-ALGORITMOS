@@ -1,7 +1,7 @@
 
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs } from "firebase/firestore"; 
+import { collection, addDoc, getDocs, setDoc, doc } from "firebase/firestore"; 
 import { SignUpForm } from "../components";
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -38,7 +38,14 @@ createUserWithEmailAndPassword(auth, formData.email, formData.password)
     
     //Agregar documento bajo ese ID
     try {
-      await addDoc(collection(db, "users-2", user.uid), formData);
+      const where = doc(db, 'users', user.uid);
+      const data = {
+        age: formData.age,
+        name: formData.name,
+        lastName: formData.lastName,
+        userName: formData.userName
+      }
+      await setDoc(where,data);
       alert ('Se creo el usuario')
     } catch (error) {
       
