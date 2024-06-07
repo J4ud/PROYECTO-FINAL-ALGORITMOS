@@ -1,5 +1,6 @@
 import { dispatch } from "../../store/store";
 import { ChangeScreen } from "../../store/actions";
+import { Screens } from "../../types/navigation";
 
 // SidebarMenu.ts
 class SidebarMenu extends HTMLElement {
@@ -92,16 +93,16 @@ class SidebarMenu extends HTMLElement {
   addEventListeners() {
     this.shadowRoot?.querySelector('#profile')?.addEventListener('click', () => {
       console.log("Profile button clicked");
-      dispatch(ChangeScreen('profile'));
+      dispatch(ChangeScreen(Screens.PROFILE));
     });
     this.shadowRoot?.querySelector('#menu')?.addEventListener('click', () => {
-      dispatch(ChangeScreen('login'));
+      dispatch(ChangeScreen(Screens.LOGIN));
     });
     this.shadowRoot?.querySelector('#forum')?.addEventListener('click', () => {
-      dispatch(ChangeScreen('forum'));
+      dispatch(ChangeScreen(Screens.PROFILE));
     });
     this.shadowRoot?.querySelector('#main')?.addEventListener('click', () => {
-      dispatch(ChangeScreen('dashboard'));
+      dispatch(ChangeScreen(Screens.DASHBOARD));
     });
   }
 }

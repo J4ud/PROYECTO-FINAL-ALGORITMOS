@@ -1,6 +1,7 @@
 import { dispatch } from "../../store/store";
 import { ChangeScreen } from "../../store/actions";
 import { login } from "../../services/firebase";
+import { Screens } from "../../types/navigation";
 // Definir una interfaz para el usuario
 interface User {
     name: string;
@@ -32,7 +33,7 @@ class LoginForm extends HTMLElement {
             
         });
         this.shadowRoot?.querySelector('#SgButton')?.addEventListener('click', () => {
-            dispatch(ChangeScreen('signUp')); // Cambia el estado a 'signUp'
+            dispatch(ChangeScreen(Screens.SINGUP)); // Cambia el estado a 'signUp'
         });
     }
 
@@ -49,7 +50,7 @@ class LoginForm extends HTMLElement {
     async submitForm() {
         try {
             const user = await login(formData);
-            dispatch(ChangeScreen('login')); // Dispatch a la acción de completar el registro
+            dispatch(ChangeScreen(Screens.LOGIN)); // Dispatch a la acción de completar el registro
           
         } catch (error) {
             console.error('Error creating user:', error);

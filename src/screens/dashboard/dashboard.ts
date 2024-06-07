@@ -5,8 +5,10 @@ import Navbar from '../../components/navbar/navbar';
 import Card, {Attr} from '../../components/Card/Card';
 import { MenuButton } from '../../components/index';
 import {SidebarMenu} from '../../components/index';;  // Asegúrate de que 'Menu/menu' es el archivo correcto para 'SidebarMenu'.
-import { appState } from '../../store/store';
-import { addObserver } from '../../store/store';
+import { appState, addObserver, dispatch } from '../../store/store';
+import { getPostsAction } from '../../store/actions';
+
+
 
 // <index></index>
 class Dashboard extends HTMLElement {
@@ -30,6 +32,15 @@ class Dashboard extends HTMLElement {
 
     this.cardsContainer = this.ownerDocument.createElement('div');
     this.cardsContainer.className = 'cards-container';
+  }
+
+  async connectedCallback(){
+    if(appState.posts.length === 0){
+      const action = await getPostsAction();
+      dispatch(action);
+    }else{
+      this.render();
+    }
   }
 
   render() {
@@ -109,9 +120,13 @@ class Dashboard extends HTMLElement {
     const cardsContainer = this.ownerDocument.createElement('div');
     cardsContainer.className = 'cards-container';
 
-    data.forEach((user: any) => {
+   
+
+    appState.posts.forEach((post:any) => {
       const card = new Card();
-      card.setAttribute(Attr.image, user.image);
+      card.setAttribute(Attr.image, post.image)
+      card.setAttribute(Attr.userName, post.userName)
+      card.setAttribute(Attr.description, post.description)
       card.className = 'card';
       this.cardsContainer.appendChild(card);
     });

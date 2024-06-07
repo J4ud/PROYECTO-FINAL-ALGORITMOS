@@ -2,7 +2,7 @@ import { reducer } from "./reducer";
 import { Screens } from "../types/navigation";
 
 const emptyState  = {
-  screen: Screens.SINGUP,
+  screen: Screens.DASHBOARD,
   posts: []
 
 }
